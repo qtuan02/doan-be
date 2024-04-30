@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const appConfig = require('../../config/env.config');
+const appConfig = require('../../configs/env.config');
 
 const jwtFitler = {
     signJwt: (email, role) => {

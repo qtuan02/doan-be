@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Staff, Role } = require("../config/models");
+const { Staff, Role } = require("../configs/models");
 const bcrypt = require('bcrypt');
 
 const staffService = {
@@ -15,11 +15,11 @@ const staffService = {
             });
             return staff;
         }catch(err){
-            throw new Error(`Failed to login`);
+            throw new Error();
         }
     },
     checkPassword: async (password, confirmPassword) => {
-        return await bcrypt.compare(password, confirmPassword);;
+        return await bcrypt.compare(password, confirmPassword);
     }
 }
 

@@ -7,6 +7,9 @@ class Message{
 
     static NOT_FOUND_STAFF = "Không tìm thấy tài khoản nhân viên!";
     static WRONG_PASSWORD = "Mật khẩu không chính xác!";
+
+    static NOT_FOUND_FILE = "Không tìm thấy file ảnh có đuôi png, jpg và jpeg!";
+    static UPLOAD_SUCCESS = "Tải ảnh lên thành công.";
 }
 
 module.exports = Message;

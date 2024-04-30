@@ -1,17 +1,19 @@
 const express = require("express");
-const { Category,Brand,Image,Product,Cart,Customer,Order,OrderDetails,Staff,Role } = require("./config/models");
-const appConfig = require("./config/env.config");
-const sequelize = require("./config/connection");
+const { Category,Brand,Image,Product,Cart,Customer,Order,OrderDetails,Staff,Role } = require("./configs/models");
+const appConfig = require("./configs/env.config");
+const sequelize = require("./configs/connection");
 const cors = require("cors");
 const limiter = require("./common/ratelimit/RateLimit");
 const app = express();
 const adminRoutes = require("./routes/admin/index");
+const uploadImage = require("./routes/UploadRoutes")
 
 app.use(cors());
 app.use(express.json());
 app.use(limiter);
 
 app.use('/v1', adminRoutes);
+app.use('/v3', uploadImage);
 
 app.listen(appConfig.PORT, () => {
   console.log(`Running port ${appConfig.PORT}.`);
