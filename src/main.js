@@ -1,5 +1,5 @@
 const express = require("express");
-const { Category,Brand,Image,Product,Cart,Customer,Order,OrderDetails,Staff,Role } = require("./configs/models");
+const { Category,Brand,Product,Cart,Customer,Order,OrderDetails,Staff,Role } = require("./configs/models");
 const appConfig = require("./configs/env.config");
 const sequelize = require("./configs/connection");
 const cors = require("cors");
