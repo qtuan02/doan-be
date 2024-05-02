@@ -29,26 +29,6 @@ const Brand = sequelize.define("brand", {
     timestamps: false
 });
 
-const Image = sequelize.define("image", {
-  image_id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  product_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  image_1: DataTypes.STRING(255),
-  image_2: DataTypes.STRING(255),
-  image_3: DataTypes.STRING(255),
-  image_4: DataTypes.STRING(255),
-  image_5: DataTypes.STRING(255),
-  image_6: DataTypes.STRING(255),
-}, {
-    timestamps: false
-});
-
 const Product = sequelize.define("product", {
   product_id: {
     type: DataTypes.INTEGER,
@@ -63,6 +43,12 @@ const Product = sequelize.define("product", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  image_1: DataTypes.STRING(255),
+  image_2: DataTypes.STRING(255),
+  image_3: DataTypes.STRING(255),
+  image_4: DataTypes.STRING(255),
+  image_5: DataTypes.STRING(255),
+  image_6: DataTypes.STRING(255),
   product_name: {
     type: DataTypes.STRING(100),
     allowNull: false,
@@ -252,7 +238,6 @@ const Role = sequelize.define("role", {
 
 Product.belongsTo(Category, { foreignKey: "category_id" });
 Product.belongsTo(Brand, { foreignKey: "brand_id" });
-Image.belongsTo(Product, { foreignKey: "product_id" });
 Order.belongsTo(Customer, { foreignKey: "customer_id" });
 Order.belongsTo(Cart, { foreignKey: "cart_id" });
 OrderDetails.belongsTo(Order, { foreignKey: "order_id" });
@@ -261,7 +246,6 @@ Staff.belongsTo(Role, { foreignKey: "role_id" });
 module.exports = {
   Category,
   Brand,
-  Image,
   Product,
   Cart,
   Customer,
