@@ -1,5 +1,5 @@
 const express = require("express");
-const { Category,Brand,Product,Cart,Customer,Order,OrderDetails,Staff,Role } = require("./configs/models");
+const { Category, Brand, Product, Cart, Customer, Order, OrderDetails, Staff, Role } = require("./configs/models");
 const appConfig = require("./configs/env.config");
 const sequelize = require("./configs/connection");
 const cors = require("cors");
@@ -17,6 +17,16 @@ app.use('/v3', uploadImage);
 
 app.listen(appConfig.PORT, () => {
   console.log(`Running port ${appConfig.PORT}.`);
+
+  // app.get('/', async (req, res) => {
+  //   try {
+  //     const categories = await Category.findAll();
+  //     res.json(categories);
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).send('Internal Server Error');
+  //   }
+  // });
 
   sequelize
     .authenticate()
