@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const categoryController = require("../../controllers/CateogoryController");
+const authenticate = require("../../common/securities/middleware");
 
 const categoryRoutes = Router();
 
 categoryRoutes.get("/", categoryController.findCategories);
-categoryRoutes.post("/", categoryController.createCategory);
-categoryRoutes.delete("/:id", categoryController.deleteCategory);
-categoryRoutes.put("/:id", categoryController.updateCategory);
+categoryRoutes.post("/", [authenticate.authenticateToken, authenticate.permission(['admin'])], categoryController.createCategory);
+categoryRoutes.delete("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], categoryController.deleteCategory);
+categoryRoutes.put("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], categoryController.updateCategory);
 
 module.exports = categoryRoutes;
