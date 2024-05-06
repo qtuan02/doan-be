@@ -151,8 +151,8 @@ const Order = sequelize.define("order", {
     type: DataTypes.STRING(50),
     allowNull: false,
   },
-  cart_id: {
-    type: DataTypes.INTEGER,
+  status: {
+    type: DataTypes.STRING(11),
     allowNull: false,
   },
 }, {
@@ -239,7 +239,6 @@ const Role = sequelize.define("role", {
 Product.belongsTo(Category, { foreignKey: "category_id" });
 Product.belongsTo(Brand, { foreignKey: "brand_id" });
 Order.belongsTo(Customer, { foreignKey: "customer_id" });
-Order.belongsTo(Cart, { foreignKey: "cart_id" });
 OrderDetails.belongsTo(Order, { foreignKey: "order_id" });
 Staff.belongsTo(Role, { foreignKey: "role_id" });
 

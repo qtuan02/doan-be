@@ -1,6 +1,33 @@
 
 class Message{
     static FIND_PRODUCT = "Danh sách sản phẩm.";
+    static FIND_CATEGORY = "Danh sách danh mục.";
+    static FIND_BRAND = "Danh sách thương hiệu.";
+    static FIND_ORDER = "Danh sách đặt hàng.";
+
+    static ADD_ORDER_FAIL = "Đặt hàng thất bại!";
+    static ADD_ORDER_SUCCESS = "Đặt hàng thành công.";
+    static NOT_FOUND_PRODUCT_CART = "Giỏ hàng không có sản phẩm nào!";
+
+    static ADD_ITEM_FAIL = "Thêm sản phẩm vào giỏ hàng thất bại!";
+    static ADD_ITEM_SUCCESS = "Thêm sản phẩm vào giỏ hàng thành công.";
+    static NOT_FOUND_CART = "Không tìm thấy sản phẩm này trong giỏ hàng!";
+    static DELETE_CART_FAIL = "Xóa sản phẩm khỏi giỏ hàng thất bại!";
+    static DELETE_CART_SUCCESS = "Xóa sản phẩm khỏi giỏ hàng thành công.";
+    static CHANGE_QUANTITY_FAIL = "Cập nhật số lượng sản phẩm thất bại!";
+    static CHANGE_QUANTITY_SUCCESS = "Cập nhật số lượng sản phẩm thành công.";
+    static PRODUCT_OVER = "Sản phẩm đã hết hàng!";
+    static QUANTITY_MUCH = "Số lượng sản phẩm không đủ để đáp ứng!";
+    static PRODUCT_EXIST = "Sản phẩm đã có trong giỏ hàng!";
+
+    static CREATE_CUSTOMER_SUCCESS = "Tạo tài khoản khách hàng thành công.";
+    static CREATE_CUSTOMER_FAIL = "Tạo tài khoản khách hàng thất bại!";
+    static UPDATE_CUSTOMER_SUCCESS = "Cập nhật thông tin người dùng thành công.";
+    static UPDATE_CUSTOMER_FAIL = "Cập nhật thông tin người dùng thất bại!";
+    static NOT_FOUND_CUSTOMER = "Không tìm thấy tài khoản người dùng!";
+    static FOUND_CUSTOMER_SUCCESS = "Tìm thấy tài khoản thành công.";
+    static CHANGE_PASSWORD_FAIL = "Thay đổi mật khẩu thất bại!";
+    static CHANGE_PASSWORD_SUCCESS = "Thay đổi mật khẩu thành công.";
 
     static NOT_FOUND_PRODUCT = "Không tìm thấy sản phẩm!";
     static CREATE_PRODUCT_SUCCESS = "Tạo sản phẩm thành công.";
@@ -36,6 +63,12 @@ class Message{
 
     static NOT_FOUND_FILE = "Không tìm thấy file ảnh có đuôi png, jpg và jpeg!";
     static UPLOAD_SUCCESS = "Tải ảnh lên thành công.";
+
+    static EMAIL_EXIST = "Email đã tồn tại!";
+    static PHONE_EXIST = "Số điện thoại đã tồn tại!";
+
+    static UNAUTHORIZED = "Không có quyền truy cập!";
+    static TOKEN_EXPIRED = "Tài khoản đã hết hạn đăng nhập!";
 }
 
 module.exports = Message;

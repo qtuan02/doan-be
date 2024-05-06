@@ -1,5 +1,5 @@
-const { Op, where } = require("sequelize");
-const { Product } = require("../configs/models");
+const { Op } = require("sequelize");
+const { Product, Category, Brand } = require("../configs/models");
 
 
 const productService = {
@@ -24,9 +24,9 @@ const productService = {
             throw new Error();
         }
     },
-    updateProduct: async (product_id, newProduct) => {
+    updateProduct: async (product_id, newData) => {
         try{
-            const updateProduct = await Product.update(newProduct, {
+            const updateProduct = await Product.update(newData, {
                 where: { product_id: product_id }
             });
             
@@ -50,7 +50,8 @@ const productService = {
             if(status) { whereCondition.status = status };
 
             const products = await Product.findAll({
-                where: whereCondition
+                where: whereCondition,
+                include: [Category, Brand]
             });
 
             return products;

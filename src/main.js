@@ -6,6 +6,7 @@ const cors = require("cors");
 const limiter = require("./common/ratelimit/RateLimit");
 const app = express();
 const adminRoutes = require("./routes/admin/index");
+const userRoutes = require("./routes/customer/index");
 const uploadImage = require("./routes/UploadRoutes")
 
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(limiter);
 
 app.use('/v1', adminRoutes);
+app.use('/v2', userRoutes);
 app.use('/v3', uploadImage);
 
 app.listen(appConfig.PORT, () => {
