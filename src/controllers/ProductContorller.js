@@ -1,3 +1,4 @@
+const { omit } = require("lodash");
 const Message = require("../common/messages/ConstantMessage");
 const JsonReponse = require("../common/reponses/JsonResponse");
 const productService = require("../services/ProductService");
@@ -23,7 +24,7 @@ const productController = {
     },
     findProducts: async (req, res) => {
         const products = await productService.findProducts(req.query);
-        return res.status(200).send(JsonReponse(200, Message.FIND_PRODUCT, products));
+        return res.status(200).send(JsonReponse(200, Message.FIND_PRODUCT, products.map(p => omit(p.toJSON(), ['brand_id', 'category_id']))));
     },
     deleteProduct: async (req, res) => {
         const product_id = req.params.id;
