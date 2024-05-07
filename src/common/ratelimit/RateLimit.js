@@ -6,7 +6,7 @@ const limiter = rateLimit({
 	limit: 10, // 5 yêu cầu
 	standardHeaders: true,
     legacyHeaders: false,
-	message: JsonReponse(429, "Quá nhiều yêu cầu trong 5 giây!", null)
+	message: JsonReponse(429, "Quá nhiều yêu cầu trong 1 phút!", null)
 })
 
 

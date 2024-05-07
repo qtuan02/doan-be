@@ -5,9 +5,12 @@ class Message{
     static FIND_BRAND = "Danh sách thương hiệu.";
     static FIND_ORDER = "Danh sách đặt hàng.";
 
+    static NOT_FOUND_ORDER = "Không tìm thấy đơn đặt hàng!";
     static ADD_ORDER_FAIL = "Đặt hàng thất bại!";
     static ADD_ORDER_SUCCESS = "Đặt hàng thành công.";
     static NOT_FOUND_PRODUCT_CART = "Giỏ hàng không có sản phẩm nào!";
+    static UPDATE_STATUS_ORDER_FAIL = "Cập nhật trạng thái đơn đặt hàng thất bại!";
+    static UPDATE_STATUS_ORDER_SUCCESS = "Cập nhật trạng thái đơn đặt hàng thành công.";
 
     static ADD_ITEM_FAIL = "Thêm sản phẩm vào giỏ hàng thất bại!";
     static ADD_ITEM_SUCCESS = "Thêm sản phẩm vào giỏ hàng thành công.";

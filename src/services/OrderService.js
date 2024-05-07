@@ -1,11 +1,49 @@
-const { Order, OrderDetails, Customer } = require("../configs/models");
+const { Order, OrderDetails, Customer, Product } = require("../configs/models");
+const productService = require("./ProductService");
 
 const orderService = {
-    findOrders: async () => {
+    findOrder: async (order_id) =>{
         try{
-            const orders = await Order.findAll(
-                {include: [Customer]}
-            );
+            const order = await Order.findOne({ where: { order_id: order_id }});
+            return order;
+        }catch(err){
+            throw new Error();
+        }
+    },
+    findOrders: async (query) => {
+        try{
+            const { phone, order_id } = query;
+
+            if(order_id){
+                const orders = await OrderDetails.findAll({ 
+                    where: { order_id: order_id }
+                });
+
+                const infoOrders = [];
+                for(const order of orders){
+                    const product = await productService.findProductById(order.product_id);
+                    infoOrders.push({
+                        order_details_id: order.order_details_id,
+                        order_id: order.order_id,
+                        quantity: order.quantity,
+                        price: order.price,
+                        product: product
+                    });
+                }
+
+                return infoOrders;
+            }
+
+            const whereCondition = {};
+
+            if(phone){ whereCondition.phone = phone }
+            const orders = await Order.findAll({
+                where: whereCondition,
+                include: [{
+                    model: Customer,
+                    where: whereCondition
+                }]
+            });
             return orders;
         }catch(err){
             throw new Error();
@@ -56,6 +94,17 @@ const orderService = {
             });
 
             return deleteAll;
+        }catch(err){
+            throw new Error();
+        }
+    },
+    updateOrder: async (order_id, newData) => {
+        try{
+            const updateOrder = await Order.update(newData, {
+                where: { order_id: order_id }
+            });
+
+            return updateOrder > 0;
         }catch(err){
             throw new Error();
         }
