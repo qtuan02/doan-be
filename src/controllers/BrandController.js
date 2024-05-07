@@ -18,7 +18,7 @@ const brandController = {
         return res.status(200).send(JsonReponse(200, Message.CREATE_BRAND_SUCCESS, brand));
     },
     findBrands: async (req, res) => {
-        const brands = await brandService.findBrands();
+        const brands = await brandService.findBrands(req.query);
         return res.status(200).send(JsonReponse(200, Message.FIND_BRAND, brands));
     },
     deleteBrand: async (req, res) => {

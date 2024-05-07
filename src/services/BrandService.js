@@ -34,9 +34,13 @@ const brandService = {
             throw new Error();
         }
     },
-    findBrands: async () => {
+    findBrands: async (query) => {
         try {
-            const brands = await Brand.findAll();
+            const { brand_id } = query;
+            const whereCondition = {};
+
+            if(brand_id){ whereCondition.brand_id = brand_id }
+            const brands = await Brand.findAll({ where: whereCondition });
             return brands;
         } catch (err) {
             throw new Error();

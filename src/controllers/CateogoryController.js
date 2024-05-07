@@ -18,8 +18,8 @@ const categoryController = {
         return res.status(200).send(JsonReponse(200, Message.CREATE_CATEGORY_SUCCESS, category));
     },
     findCategories: async (req, res) => {
-        const categories = await categoryService.findCategories();
-        return res.status(200).send(JsonReponse(200, Message.FIND_CATEGORIES, categories));
+        const categories = await categoryService.findCategories(req.query);
+        return res.status(200).send(JsonReponse(200, Message.FIND_CATEGORY, categories));
     },
     deleteCategory: async (req, res) => {
         const category_id = req.params.id;

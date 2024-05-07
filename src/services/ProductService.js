@@ -37,12 +37,13 @@ const productService = {
     },
     findProducts: async (query) => {
         try{
-            const { brand_id, category_id, product_name, status } = query;
+            const { brand_id, category_id, product_name, status, product_id } = query;
             const whereCondition = {};
 
+            if(product_id){ whereCondition.product_id = product_id };
             if(brand_id){ whereCondition.brand_id = brand_id };
             if(category_id){ whereCondition.category_id = category_id };
-            if(product_name){ 
+            if(product_name){
                 whereCondition.product_name = {
                     [Op.like]: `%${product_name}%`
                 };

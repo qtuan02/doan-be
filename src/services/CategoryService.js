@@ -34,9 +34,13 @@ const categoryService = {
             throw new Error();
         }
     },
-    findCategories: async () => {
+    findCategories: async (query) => {
         try {
-            const categories = await Category.findAll();
+            const { category_id } = query;
+            const whereCondition = {};
+
+            if(category_id){ whereCondition.category_id = category_id }
+            const categories = await Category.findAll({ where: whereCondition });
             return categories;
         } catch (err) {
             throw new Error();
