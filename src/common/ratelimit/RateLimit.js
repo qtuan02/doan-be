@@ -2,11 +2,11 @@ const rateLimit = require('express-rate-limit');
 const JsonReponse = require('../reponses/JsonResponse');
 
 const limiter = rateLimit({
-	windowMs: 60 * 1000, // 5 giây
-	limit: 10, // 5 yêu cầu
+	windowMs: 1 * 1000, //1 giây
+	limit: 10, //10 request
 	standardHeaders: true,
     legacyHeaders: false,
-	message: JsonReponse(429, "Quá nhiều yêu cầu trong 1 phút!", null)
+	message: JsonReponse(429, "Quá nhiều yêu cầu để xử lý!", null)
 })
 
 
