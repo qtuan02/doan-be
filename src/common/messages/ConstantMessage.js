@@ -4,6 +4,7 @@ class Message{
     static FIND_CATEGORY = "Danh sách danh mục.";
     static FIND_BRAND = "Danh sách thương hiệu.";
     static FIND_ORDER = "Danh sách đặt hàng.";
+    static FIND_CUSTOMER = "Danh sách khách hàng.";
 
     static NOT_FOUND_ORDER = "Không tìm thấy đơn đặt hàng!";
     static ADD_ORDER_FAIL = "Đặt hàng thất bại!";

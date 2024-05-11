@@ -12,7 +12,7 @@ const orderService = {
     },
     findOrders: async (query) => {
         try{
-            const { phone, order_id } = query;
+            const { phone, order_id, status } = query;
 
             if(order_id){
                 const orders = await OrderDetails.findAll({ 
@@ -35,13 +35,15 @@ const orderService = {
             }
 
             const whereCondition = {};
+            const whereConditionCustomer = {};
 
-            if(phone){ whereCondition.phone = phone }
+            if(phone){ whereConditionCustomer.phone = phone }
+            if(status){ whereCondition.status = status }
             const orders = await Order.findAll({
                 where: whereCondition,
                 include: [{
                     model: Customer,
-                    where: whereCondition
+                    where: whereConditionCustomer
                 }]
             });
             return orders;
@@ -52,7 +54,7 @@ const orderService = {
     createOrder: async (customer_id, total_price, order_address, payment_method) => {
         try{
             const order_date = new Date().toLocaleDateString('vi-VN');
-            const status = "Đang chờ";
+            const status = "pending";
             const order = await Order.create({ customer_id, total_price, order_address, order_date, payment_method, status });
             return order;
         }catch(err){

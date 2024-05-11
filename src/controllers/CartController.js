@@ -131,7 +131,7 @@ const cartController = {
             return res.status(400).send(JsonReponse(400, Message.NOT_FOUND_PRODUCT_CART, null));
         }
 
-        let { total_price, order_address, payment_method } =  req.body;
+        let { total_price, order_address, payment_method } = req.body;
         if(!total_price || !payment_method){
             return res.status(400).send(JsonReponse(400, Message.FILED_EMPTY, null));
         }

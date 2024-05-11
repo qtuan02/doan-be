@@ -2,8 +2,23 @@ const { Op, where } = require("sequelize");
 const bcrypt = require("bcrypt");
 const { Customer } = require("../configs/models");
 const { omit } = require('lodash');
+const { findCustomers } = require("../controllers/CustomerController");
 
 const customerService = {
+    findCustomers: async (query) => {
+        try{
+            const { phone } = query;
+            const whereCondition = {};
+
+            if(phone){ whereCondition.phone = phone }
+            const customers = await Customer.findAll({
+                where: whereCondition
+            });
+            return customers;
+        }catch(err){
+            throw new Error();
+        }
+    },
     findByEmail: async (email) => {
         try{
             const customer = await Customer.findOne({

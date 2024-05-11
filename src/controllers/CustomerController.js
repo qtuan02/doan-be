@@ -5,6 +5,10 @@ const jwtFitler = require("../common/securities/jwt");
 const { omit } = require("lodash");
 
 const customerController = {
+    findCustomers: async (req, res) => {
+        const customers = await customerService.findCustomers(req.query);
+        return res.status(200).send(JsonReponse(200, Message.FIND_CUSTOMER, customers));
+    },
     findInfo: async (req, res) => {
         const tokenObj = await jwtFitler.verifyJwt(jwtFitler.getTokenFromHeader(req));
         if(!tokenObj){
@@ -19,8 +23,8 @@ const customerController = {
         return res.status(200).send(JsonReponse(200, Message.FOUND_CUSTOMER_SUCCESS, omit(customer.toJSON(), 'password')));
     },
     register: async (req, res) => {
-        const { customer_firstname, customer_lastname, phone, email, password } = req.body;
-        if(!customer_firstname || !customer_lastname || !phone || !email || !password){
+        const { customer_firstname, customer_lastname, phone, email, password, address } = req.body;
+        if(!customer_firstname || !customer_lastname || !phone || !email || !password || !address){
             return res.status(400).send(JsonReponse(400, Message.FILED_EMPTY, null));
         }
 
@@ -34,7 +38,7 @@ const customerController = {
             return res.status(400).send(JsonReponse(400, Message.PHONE_EXIST, null));
         }
 
-        const newCustomer = await customerService.createCustomer({ customer_firstname, customer_lastname, phone, email, password });
+        const newCustomer = await customerService.createCustomer({ customer_firstname, customer_lastname, phone, email, password, address });
         if(!newCustomer){
             return res.status(400).send(JsonReponse(400, Message.CREATE_CUSTOMER_FAIL, null));
         }
