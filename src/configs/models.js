@@ -57,7 +57,7 @@ const Product = sequelize.define("product", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  description: DataTypes.STRING(1000),
+  description: DataTypes.LONGTEXT,
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
