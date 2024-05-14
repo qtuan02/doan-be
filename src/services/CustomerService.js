@@ -22,6 +22,7 @@ const customerService = {
 
             const customers = await Customer.findAll({
                 where: whereCondition,
+                order: [['customer_id', 'DESC']],
                 limit: limit,
                 offset: offset
             });

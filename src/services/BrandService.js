@@ -67,6 +67,7 @@ const brandService = {
 
             const brands = await Brand.findAll({ 
                 where: whereCondition,
+                order: [['brand_id', 'DESC']],
                 limit: limit,
                 offset: offset
             });

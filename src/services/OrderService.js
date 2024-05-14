@@ -53,6 +53,7 @@ const orderService = {
                     model: Customer,
                     where: whereConditionCustomer
                 }],
+                order: [['order_id', 'DESC']],
                 limit: limit,
                 offset: offset
             });

@@ -86,6 +86,7 @@ const productService = {
             const products = await Product.findAll({
                 where: whereCondition,
                 include: [Category, Brand],
+                order: [['product_id', 'DESC']],
                 limit: limit,
                 offset: offset
             });

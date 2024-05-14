@@ -63,6 +63,7 @@ const categoryService = {
 
             const categories = await Category.findAll({ 
                 where: whereCondition,
+                order: [['category_id', 'DESC']],
                 limit: limit,
                 offset: offset
             });
