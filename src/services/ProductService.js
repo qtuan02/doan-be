@@ -81,7 +81,9 @@ const productService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
-            const count = await Product.count();
+            const count = await Product.count({
+                where: whereCondition
+            });
 
             const products = await Product.findAll({
                 where: whereCondition,

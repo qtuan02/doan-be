@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Brand } = require("../configs/models");
 
 
@@ -52,10 +53,15 @@ const brandService = {
     },
     findBrandsPage: async (query) => {
         try {
-            const { brand_id } = query;
+            const { brand_id, brand_name } = query;
             const whereCondition = {};
 
             if(brand_id){ whereCondition.brand_id = brand_id }
+            if (brand_name) {
+                whereCondition.brand_name = {
+                    [Op.like]: `%${brand_name}%`
+                };
+            }
 
             let page = query.page;
             let limit = query.limit;
@@ -63,7 +69,9 @@ const brandService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
-            const count = await Brand.count();
+            const count = await Brand.count({
+                where: whereCondition
+            });
 
             const brands = await Brand.findAll({ 
                 where: whereCondition,

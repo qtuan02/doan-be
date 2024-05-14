@@ -45,7 +45,9 @@ const orderService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
-            const count = await Order.count();
+            const count = await Order.count({
+                where: whereCondition
+            });
 
             const orders = await Order.findAll({
                 where: whereCondition,

@@ -48,10 +48,15 @@ const categoryService = {
     },
     findCategoriesPage: async (query) => {
         try {
-            const { category_id } = query;
+            const { category_id, category_name } = query;
             const whereCondition = {};
 
             if(category_id){ whereCondition.category_id = category_id }
+            if (category_name) {
+                whereCondition.category_name = {
+                    [Op.like]: `%${category_name}%`
+                };
+            }
 
             let page = query.page;
             let limit = query.limit;
@@ -59,7 +64,9 @@ const categoryService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
-            const count = await Category.count();
+            const count = await Category.count({
+                whereCondition: whereCondition
+            });
 
             const categories = await Category.findAll({ 
                 where: whereCondition,
