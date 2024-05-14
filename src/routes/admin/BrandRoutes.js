@@ -6,6 +6,7 @@ const authenticate = require("../../common/securities/middleware");
 const brandRoutes = Router();
 
 brandRoutes.get("/", brandController.findBrands);
+brandRoutes.get("/page", brandController.findBrandsPage);
 brandRoutes.post("/", [authenticate.authenticateToken, authenticate.permission(['admin'])], brandController.createBrand);
 brandRoutes.delete("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], brandController.deleteBrand);
 brandRoutes.put("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], brandController.updateBrand);

@@ -11,8 +11,17 @@ const customerService = {
             const whereCondition = {};
 
             if(phone){ whereCondition.phone = phone }
+
+            let page = query.page;
+            let limit = query.limit;
+            if(!page) page = 1;
+            if(!limit) limit = 5;
+            const offset = (page - 1) * limit;
+
             const customers = await Customer.findAll({
-                where: whereCondition
+                where: whereCondition,
+                limit: limit,
+                offset: offset
             });
             return customers;
         }catch(err){

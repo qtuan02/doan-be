@@ -40,7 +40,34 @@ const brandService = {
             const whereCondition = {};
 
             if(brand_id){ whereCondition.brand_id = brand_id }
-            const brands = await Brand.findAll({ where: whereCondition });
+
+
+            const brands = await Brand.findAll({ 
+                where: whereCondition,
+            });
+            return brands;
+        } catch (err) {
+            throw new Error();
+        }
+    },
+    findBrandsPage: async (query) => {
+        try {
+            const { brand_id } = query;
+            const whereCondition = {};
+
+            if(brand_id){ whereCondition.brand_id = brand_id }
+
+            let page = query.page;
+            let limit = query.limit;
+            if(!page) page = 1;
+            if(!limit) limit = 5;
+            const offset = (page - 1) * limit;
+
+            const brands = await Brand.findAll({ 
+                where: whereCondition,
+                limit: limit,
+                offset: offset
+            });
             return brands;
         } catch (err) {
             throw new Error();

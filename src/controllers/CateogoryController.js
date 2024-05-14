@@ -21,6 +21,10 @@ const categoryController = {
         const categories = await categoryService.findCategories(req.query);
         return res.status(200).send(JsonReponse(200, Message.FIND_CATEGORY, categories));
     },
+    findCategoriesPage: async (req, res) => {
+        const categories = await categoryService.findCategoriesPage(req.query);
+        return res.status(200).send(JsonReponse(200, Message.FIND_CATEGORY, categories));
+    },
     deleteCategory: async (req, res) => {
         const category_id = req.params.id;
         if (!category_id) {

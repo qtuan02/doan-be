@@ -26,6 +26,10 @@ const productController = {
         const products = await productService.findProducts(req.query);
         return res.status(200).send(JsonReponse(200, Message.FIND_PRODUCT, products.map(p => omit(p.toJSON(), ['brand_id', 'category_id']))));
     },
+    findProductsPage: async (req, res) => {
+        const products = await productService.findProductsPage(req.query);
+        return res.status(200).send(JsonReponse(200, Message.FIND_PRODUCT, products.map(p => omit(p.toJSON(), ['brand_id', 'category_id']))));
+    },
     deleteProduct: async (req, res) => {
         const product_id = req.params.id;
         if(!product_id){

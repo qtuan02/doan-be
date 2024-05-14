@@ -52,7 +52,40 @@ const productService = {
 
             const products = await Product.findAll({
                 where: whereCondition,
-                include: [Category, Brand]
+                include: [Category, Brand],
+            });
+
+            return products;
+        }catch(err){
+            throw new Error();
+        }
+    },
+    findProductsPage: async (query) => {
+        try{
+            const { brand_id, category_id, product_name, status, product_id } = query;
+            const whereCondition = {};
+
+            if(product_id){ whereCondition.product_id = product_id };
+            if(brand_id){ whereCondition.brand_id = brand_id };
+            if(category_id){ whereCondition.category_id = category_id };
+            if(product_name){
+                whereCondition.product_name = {
+                    [Op.like]: `%${product_name}%`
+                };
+            };
+            if(status) { whereCondition.status = status };
+
+            let page = query.page;
+            let limit = query.limit;
+            if(!page) page = 1;
+            if(!limit) limit = 5;
+            const offset = (page - 1) * limit;
+
+            const products = await Product.findAll({
+                where: whereCondition,
+                include: [Category, Brand],
+                limit: limit,
+                offset: offset
             });
 
             return products;

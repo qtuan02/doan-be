@@ -45,6 +45,29 @@ const categoryService = {
         } catch (err) {
             throw new Error();
         }
+    },
+    findCategoriesPage: async (query) => {
+        try {
+            const { category_id } = query;
+            const whereCondition = {};
+
+            if(category_id){ whereCondition.category_id = category_id }
+
+            let page = query.page;
+            let limit = query.limit;
+            if(!page) page = 1;
+            if(!limit) limit = 5;
+            const offset = (page - 1) * limit;
+
+            const categories = await Category.findAll({ 
+                where: whereCondition,
+                limit: limit,
+                offset: offset
+            });
+            return categories;
+        } catch (err) {
+            throw new Error();
+        }
     }, 
     findCategoryById: async (category_id) => {
         try {
