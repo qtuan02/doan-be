@@ -31,7 +31,7 @@ const orderService = {
                     });
                 }
 
-                return infoOrders;
+                return {rows: infoOrders};
             }
 
             const whereCondition = {};
