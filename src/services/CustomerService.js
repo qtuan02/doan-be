@@ -18,7 +18,9 @@ const customerService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
-            const count = await Customer.count();
+            const count = await Customer.count({
+                where: whereCondition
+            });
 
             const customers = await Customer.findAll({
                 where: whereCondition,

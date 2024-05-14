@@ -66,7 +66,7 @@ const categoryService = {
             const offset = (page - 1) * limit;
 
             const count = await Category.count({
-                whereCondition: whereCondition
+                where: whereCondition
             });
 
             const categories = await Category.findAll({ 
