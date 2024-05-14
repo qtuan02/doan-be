@@ -36,6 +36,8 @@ const orderService = {
 
             const whereCondition = {};
             const whereConditionCustomer = {};
+            if(phone){ whereConditionCustomer.phone = phone }
+            if(status){ whereCondition.status = status }
 
             let page = query.page;
             let limit = query.limit;
@@ -43,8 +45,8 @@ const orderService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
-            if(phone){ whereConditionCustomer.phone = phone }
-            if(status){ whereCondition.status = status }
+            const count = await Brand.count();
+
             const orders = await Order.findAll({
                 where: whereCondition,
                 include: [{
@@ -54,7 +56,7 @@ const orderService = {
                 limit: limit,
                 offset: offset
             });
-            return orders;
+            return {count, rows: orders};
         }catch(err){
             throw new Error();
         }

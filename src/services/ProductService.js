@@ -81,6 +81,8 @@ const productService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
+            const count = await Product.count();
+
             const products = await Product.findAll({
                 where: whereCondition,
                 include: [Category, Brand],
@@ -88,7 +90,7 @@ const productService = {
                 offset: offset
             });
 
-            return products;
+            return {count, rows: products};
         }catch(err){
             throw new Error();
         }

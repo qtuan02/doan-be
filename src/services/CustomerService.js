@@ -18,12 +18,14 @@ const customerService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
+            const count = await Customer.count();
+
             const customers = await Customer.findAll({
                 where: whereCondition,
                 limit: limit,
                 offset: offset
             });
-            return customers;
+            return {count, rows: customers};
         }catch(err){
             throw new Error();
         }

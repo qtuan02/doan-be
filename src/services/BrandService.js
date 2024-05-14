@@ -63,12 +63,14 @@ const brandService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
+            const count = await Brand.count();
+
             const brands = await Brand.findAll({ 
                 where: whereCondition,
                 limit: limit,
                 offset: offset
             });
-            return brands;
+            return { count, rows: brands};
         } catch (err) {
             throw new Error();
         }

@@ -23,7 +23,7 @@ const categoryController = {
     },
     findCategoriesPage: async (req, res) => {
         const categories = await categoryService.findCategoriesPage(req.query);
-        return res.status(200).send(JsonReponse(200, Message.FIND_CATEGORY, categories));
+        return res.status(200).send(JsonReponse(200, categories.count, categories.rows));
     },
     deleteCategory: async (req, res) => {
         const category_id = req.params.id;

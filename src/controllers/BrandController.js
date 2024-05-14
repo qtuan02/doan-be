@@ -23,7 +23,7 @@ const brandController = {
     },
     findBrandsPage: async (req, res) => {
         const brands = await brandService.findBrandsPage(req.query);
-        return res.status(200).send(JsonReponse(200, Message.FIND_BRAND, brands));
+        return res.status(200).send(JsonReponse(200, brands.count, brands.rows));
     },
     deleteBrand: async (req, res) => {
         const brand_id = req.params.id;

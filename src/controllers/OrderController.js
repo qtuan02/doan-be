@@ -6,7 +6,7 @@ const orderService = require("../services/OrderService");
 const orderController = { 
     findAll: async (req, res) => {
         const orders = await orderService.findOrders(req.query);
-        return res.status(200).send(JsonReponse(200, Message.FIND_ORDER, orders));
+        return res.status(200).send(JsonReponse(200, orders.count, orders.rows));
     },
     updateOrder: async (req, res) => {
         const order_id = req.params.id;

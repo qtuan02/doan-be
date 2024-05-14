@@ -7,7 +7,7 @@ const { omit } = require("lodash");
 const customerController = {
     findCustomers: async (req, res) => {
         const customers = await customerService.findCustomers(req.query);
-        return res.status(200).send(JsonReponse(200, Message.FIND_CUSTOMER, customers));
+        return res.status(200).send(JsonReponse(200, customers.count, customers.rows));
     },
     findInfo: async (req, res) => {
         const tokenObj = await jwtFitler.verifyJwt(jwtFitler.getTokenFromHeader(req));

@@ -59,12 +59,14 @@ const categoryService = {
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
 
+            const count = await Category.count();
+
             const categories = await Category.findAll({ 
                 where: whereCondition,
                 limit: limit,
                 offset: offset
             });
-            return categories;
+            return {count, rows: categories};
         } catch (err) {
             throw new Error();
         }
