@@ -76,7 +76,7 @@ const productService = {
             if(status) { whereCondition.status = status };
 
             let page = query.page;
-            let limit = query.limit;
+            let limit = parseInt(query.limit);
             if(!page) page = 1;
             if(!limit) limit = 5;
             const offset = (page - 1) * limit;
