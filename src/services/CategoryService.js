@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Category } = require("../configs/models");
 
 
@@ -34,10 +35,34 @@ const categoryService = {
             throw new Error();
         }
     },
-    findCategories: async () => {
+    findCategories: async (query) => {
         try {
-            const categories = await Category.findAll();
-            return categories;
+            const { category_name, page, limit } = query;
+            const whereCondition = {};
+
+            if(category_name){
+                whereCondition.category_name = {
+                    [Op.like]: `%${category_name}%`
+                }
+            };
+
+            const options = {
+                where: whereCondition,
+                order: [['category_id', 'desc']],
+            };
+
+            if(page && limit) {
+                const offset = (page - 1) * limit;
+                options.limit = parseInt(limit);
+                options.offset = parseInt(offset);
+            }
+
+            const count = await Category.count({
+                where: whereCondition
+            });
+
+            const categories = await Category.findAll(options);
+            return { count: count, rows: categories };
         } catch (err) {
             throw new Error();
         }

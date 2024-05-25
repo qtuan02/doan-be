@@ -1,35 +1,35 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./connection");
 
-const Category = sequelize.define("category", {
+const Category = sequelize.define("categories", {
   category_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
   category_name: {
-    type: DataTypes.STRING(30),
+    type: DataTypes.STRING(50),
     allowNull: false,
   },
 }, {
     timestamps: false
 });
 
-const Brand = sequelize.define("brand", {
+const Brand = sequelize.define("brands", {
   brand_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
   brand_name: {
-    type: DataTypes.STRING(30),
+    type: DataTypes.STRING(50),
     allowNull: false,
   },
 }, {
     timestamps: false
 });
 
-const Product = sequelize.define("product", {
+const Product = sequelize.define("products", {
   product_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -43,34 +43,47 @@ const Product = sequelize.define("product", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  image_1: DataTypes.STRING(255),
-  image_2: DataTypes.STRING(255),
-  image_3: DataTypes.STRING(255),
-  image_4: DataTypes.STRING(255),
-  image_5: DataTypes.STRING(255),
-  image_6: DataTypes.STRING(255),
+  image: DataTypes.STRING(255),
   product_name: {
     type: DataTypes.STRING(100),
     allowNull: false,
   },
   price: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
-  description: DataTypes.STRING(1000),
+  description: DataTypes.TEXT,
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
   status: {
-    type: DataTypes.STRING(20),
+    type: DataTypes.STRING(30),
     allowNull: false,
   },
 }, {
     timestamps: false
 });
 
-const Cart = sequelize.define("cart", {
+const Image = sequelize.define("images", {
+  image_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  url: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  },
+  product_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+    timestamps: false
+});
+
+const Cart = sequelize.define("carts", {
   cart_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -80,11 +93,11 @@ const Cart = sequelize.define("cart", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  customer_id: {
+  user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  cart_quantity: {
+  quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -92,23 +105,26 @@ const Cart = sequelize.define("cart", {
     timestamps: false
 });
 
-const Customer = sequelize.define("customer", {
-  customer_id: {
+const User = sequelize.define("users", {
+  user_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  customer_firstname: {
+  firstname: {
     type: DataTypes.STRING(30),
     allowNull: false,
   },
-  customer_lastname: {
+  lastname: {
     type: DataTypes.STRING(10),
     allowNull: false,
   },
-  address: DataTypes.STRING(255),
+  address: {
+    type: DataTypes.STRING(500),
+    allowNull: false,
+  },
   email: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.STRING(255),
     allowNull: false,
   },
   phone: {
@@ -121,22 +137,35 @@ const Customer = sequelize.define("customer", {
     type: DataTypes.STRING(64),
     allowNull: false,
   },
+  status: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
+  },
+  role: DataTypes.STRING(20)
 }, {
     timestamps: false
 });
 
-const Order = sequelize.define("order", {
+const Order = sequelize.define("orders", {
   order_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  customer_id: {
+  user_id: {
     type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  fullname: {
+    type: DataTypes.STRING(80),
+    allowNull: false,
+  },
+  phone: {
+    type: DataTypes.STRING(11),
     allowNull: false,
   },
   total_price: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
   order_address: {
@@ -148,19 +177,19 @@ const Order = sequelize.define("order", {
     allowNull: false,
   },
   payment_method: {
-    type: DataTypes.STRING(50),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   status: {
-    type: DataTypes.STRING(11),
+    type: DataTypes.STRING(20),
     allowNull: false,
   },
 }, {
     timestamps: false
 });
 
-const OrderDetails = sequelize.define("orderDetails", {
-  order_details_id: {
+const OrderDetail = sequelize.define("order_detail", {
+  order_detail_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -170,7 +199,7 @@ const OrderDetails = sequelize.define("orderDetails", {
     allowNull: false,
   },
   price: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT,
     allowNull: false,
   },
   quantity: {
@@ -185,71 +214,23 @@ const OrderDetails = sequelize.define("orderDetails", {
     timestamps: false
 });
 
-const Staff = sequelize.define("staff", {
-  staff_id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  staff_firstname: {
-    type: DataTypes.STRING(30),
-    allowNull: false,
-  },
-  staff_lastname: {
-    type: DataTypes.STRING(10),
-    allowNull: false,
-  },
-  address: DataTypes.STRING(255),
-  email: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  phone: {
-    type: DataTypes.STRING(11),
-    allowNull: false,
-  },
-  birth: DataTypes.STRING(11),
-  gender: DataTypes.STRING(10),
-  password: {
-    type: DataTypes.STRING(64),
-    allowNull: false,
-  },
-  role_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-}, {
-    timestamps: false
-});
-
-const Role = sequelize.define("role", {
-  role_id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  role_name: {
-    type: DataTypes.STRING(30),
-    allowNull: false,
-  },
-}, {
-    timestamps: false
-});
 
 Product.belongsTo(Category, { foreignKey: "category_id" });
 Product.belongsTo(Brand, { foreignKey: "brand_id" });
-Order.belongsTo(Customer, { foreignKey: "customer_id" });
-OrderDetails.belongsTo(Order, { foreignKey: "order_id" });
-Staff.belongsTo(Role, { foreignKey: "role_id" });
+Image.belongsTo(Product, { foreignKey: "product_id" });
+OrderDetail.belongsTo(Product, { foreignKey: "product_id" });
+OrderDetail.belongsTo(Order, { foreignKey: "order_id" });
+Order.belongsTo(User, { foreignKey: "user_id" });
+Cart.belongsTo(User, { foreignKey: "user_id" });
+Cart.belongsTo(Product, { foreignKey: "product_id" });
 
 module.exports = {
   Category,
   Brand,
   Product,
   Cart,
-  Customer,
+  User,
   Order,
-  OrderDetails,
-  Staff,
-  Role,
+  OrderDetail,
+  Image
 };

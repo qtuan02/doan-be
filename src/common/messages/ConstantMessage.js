@@ -1,13 +1,9 @@
 
 class Message{
-    static FIND_PRODUCT = "Danh sách sản phẩm.";
-    static FIND_CATEGORY = "Danh sách danh mục.";
-    static FIND_BRAND = "Danh sách thương hiệu.";
-    static FIND_ORDER = "Danh sách đặt hàng.";
-
     static ADD_ORDER_FAIL = "Đặt hàng thất bại!";
     static ADD_ORDER_SUCCESS = "Đặt hàng thành công.";
     static NOT_FOUND_PRODUCT_CART = "Giỏ hàng không có sản phẩm nào!";
+    static NOT_FOUND_ORDER = "Không tìm thấy danh sách đặt hàng!";
 
     static ADD_ITEM_FAIL = "Thêm sản phẩm vào giỏ hàng thất bại!";
     static ADD_ITEM_SUCCESS = "Thêm sản phẩm vào giỏ hàng thành công.";
@@ -20,14 +16,15 @@ class Message{
     static QUANTITY_MUCH = "Số lượng sản phẩm không đủ để đáp ứng!";
     static PRODUCT_EXIST = "Sản phẩm đã có trong giỏ hàng!";
 
-    static CREATE_CUSTOMER_SUCCESS = "Tạo tài khoản khách hàng thành công.";
-    static CREATE_CUSTOMER_FAIL = "Tạo tài khoản khách hàng thất bại!";
-    static UPDATE_CUSTOMER_SUCCESS = "Cập nhật thông tin người dùng thành công.";
-    static UPDATE_CUSTOMER_FAIL = "Cập nhật thông tin người dùng thất bại!";
-    static NOT_FOUND_CUSTOMER = "Không tìm thấy tài khoản người dùng!";
-    static FOUND_CUSTOMER_SUCCESS = "Tìm thấy tài khoản thành công.";
+    static CREATE_USER_SUCCESS = "Tạo tài khoản người dùng thành công.";
+    static CREATE_USER_FAIL = "Tạo tài khoản người dùng thất bại!";
+    static UPDATE_USER_SUCCESS = "Cập nhật thông tin người dùng thành công.";
+    static UPDATE_USER_FAIL = "Cập nhật thông tin người dùng thất bại!";
+    static NOT_FOUND_USER = "Không tìm thấy tài khoản người dùng!";
+    static FOUND_USER_SUCCESS = "Tìm thấy tài khoản thành công.";
     static CHANGE_PASSWORD_FAIL = "Thay đổi mật khẩu thất bại!";
     static CHANGE_PASSWORD_SUCCESS = "Thay đổi mật khẩu thành công.";
+    static STATUS_FALSE = "Tài khoản đã bị khóa!";
 
     static NOT_FOUND_PRODUCT = "Không tìm thấy sản phẩm!";
     static CREATE_PRODUCT_SUCCESS = "Tạo sản phẩm thành công.";
@@ -36,6 +33,8 @@ class Message{
     static DELETE_PRODUCT_FAIL = "Xóa sản phẩm thất bại!";
     static UPDATE_PRODUCT_SUCCESS = "Cập nhật sản phẩm thành công.";
     static UPDATE_PRODUCT_FAIL = "Cập nhật sản phẩm thất bại!";
+
+    static CREATE_IMAGE_FAIL = "Tạo danh sách ảnh thất bại!";
 
     static NOT_FOUND_CATEGORY = "Không tìm thấy danh mục!";
     static CREATE_CATEGORY_SUCCESS = "Tạo danh mục thành công.";
@@ -52,6 +51,12 @@ class Message{
     static DELETE_BRAND_FAIL = "Xóa thương hiệu thất bại!";
     static UPDATE_BRAND_SUCCESS = "Cập nhật thương hiệu thành công.";
     static UPDATE_BRAND_FAIL = "Cập nhật thương hiệu thất bại!";
+
+    static NOT_FOUND_IMAGE = "Ảnh không tồn tại!";
+    static DELETE_IMAGE_FAIL = "Đã có lỗi xảy ra với việc xóa ảnh!";
+    static DELETE_IMAGE_SUCCESS = "Xóa ảnh thành công.";
+    static UPDATE_IMAGE_SUCCESS = "Cập nhật ảnh thành công.";
+    static UPDATE_IMAGE_FAIL = "Cập nhật ảnh thất bại!";
 
     static LOGIN_SUCCESS = "Đăng nhập thành công.";
     static LOGIN_FAIL = "Đăng nhập thất bại!";

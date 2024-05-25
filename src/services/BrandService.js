@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Brand } = require("../configs/models");
 
 
@@ -34,10 +35,34 @@ const brandService = {
             throw new Error();
         }
     },
-    findBrands: async () => {
+    findBrands: async (query) => {
         try {
-            const brands = await Brand.findAll();
-            return brands;
+            const { brand_name, page, limit } = query;
+            const whereCondition = {};
+
+            if(brand_name){
+                whereCondition.brand_name = {
+                    [Op.like]: `%${brand_name}%`
+                }
+            };
+
+            const options = {
+                where: whereCondition,
+                order: [['brand_id', 'desc']],
+            };
+
+            if(page && limit) {
+                const offset = (page - 1) * limit;
+                options.limit = parseInt(limit);
+                options.offset = parseInt(offset);
+            }
+
+            const count = await Brand.count({
+                where: whereCondition
+            });
+
+            const brands = await Brand.findAll(options);
+            return { count: count, rows: brands };
         } catch (err) {
             throw new Error();
         }

@@ -4,6 +4,6 @@ const uploadCloud = require("../configs/cloudinary");
 
 const uploadRoutes = Router();
 
-uploadRoutes.post('/uploads', uploadCloud.single('image'), uploads.uploadImage);
+uploadRoutes.post('/', uploadCloud.single('image'), uploads.uploadImage);
 
 module.exports = uploadRoutes;

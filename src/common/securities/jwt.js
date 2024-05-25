@@ -5,7 +5,7 @@ const jwtFitler = {
     signJwt: (email, role) => {
         return jwt.sign({email, role}, appConfig.JWT_PRIVATE_KEY, {
             algorithm: "HS256",
-            expiresIn: "1h"
+            expiresIn: "1w"
         })
     },
     verifyJwt: (token) => {

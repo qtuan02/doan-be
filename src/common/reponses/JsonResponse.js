@@ -1,5 +1,5 @@
 
-const JsonReponse = (status, message, data)=>{
+const JsonResponse = (status, message, data)=>{
     return {
         status: status,
         message: message,
@@ -7,4 +7,4 @@ const JsonReponse = (status, message, data)=>{
     }
 }
 
-module.exports = JsonReponse;
+module.exports = JsonResponse;

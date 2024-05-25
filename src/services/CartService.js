@@ -1,12 +1,30 @@
-const { Cart } = require("../configs/models");
+const { Cart, Product } = require("../configs/models");
 const productService = require("./ProductService");
 
-
 const cartService = {
-    findItem: async (cart_id) => {
+    checkStatusAndDelete: async () => {
+        try{
+            const products = await Product.findAll();
+            let check = false;
+
+            for (const product of products) {
+                if (product.status !== "true") {
+                    const isDeleted = await Cart.destroy({
+                        where: { product_id: product.product_id }
+                    });
+                    if(isDeleted > 0) check = true;
+                }
+            }
+
+            return check;
+        }catch(err){
+            throw new Error();
+        }
+    },
+    findItem: async (cart_id, user_id) => {
         try{
             const item = await Cart.findOne({
-                where: { cart_id: cart_id }
+                where: { cart_id: cart_id, user_id: user_id }
             });
 
             return item;
@@ -14,20 +32,20 @@ const cartService = {
             throw new Error();
         }
     },
-    addItem: async (customer_id, product_id, cart_quantity) => {
+    addItem: async (user_id, product_id, quantity) => {
         try{
-            const item = await Cart.create({ customer_id, product_id, cart_quantity });
+            const item = await Cart.create({ user_id, product_id, quantity });
             return item;
         }catch(err){
             throw new Error();
         }
     },
-    deleteItem: async (cart_id, customer_id) => {
+    deleteItem: async (cart_id, user_id) => {
         try{
             const item = await Cart.destroy({
                 where: { 
                     cart_id: cart_id,
-                    customer_id: customer_id
+                    user_id: user_id
                 }
             });
             return item > 0;
@@ -35,12 +53,12 @@ const cartService = {
             throw new Erro();
         }
     },
-    changeQuantity: async (customer_id, cart_id,  cart_quantity) => {
+    changeQuantity: async (user_id, cart_id,  quantity) => {
         try{
-            const updateQuantity = await Cart.update({ cart_quantity }, {
+            const updateQuantity = await Cart.update({ quantity: quantity }, {
                 where: { 
                     cart_id: cart_id,
-                    customer_id: customer_id
+                    user_id: user_id
                 }
             });
 
@@ -49,44 +67,48 @@ const cartService = {
             throw new Error();
         }
     },
-    findCartByCustomer: async (customer_id) => {
+    findCartByCustomer: async (user_id) => {
         try{
             const carts = await Cart.findAll({
-                where: { customer_id: customer_id },
+                where: { user_id: user_id }
+            });
+
+            const count = await Cart.count({
+                where: { user_id: user_id }
             });
 
             const infoCarts = [];
             for (const cart of carts) {
-                const product = await productService.findProductById(cart.product_id);
+                const product = await productService.findOne(cart.product_id);
                 infoCarts.push({ cart_id: cart.cart_id,
                     product: {
                         product_id: product.product_id,
-                        image: product.image_1,
+                        image: product.image,
                         product_name: product.product_name,
                         price: product.price
                     },
-                    cart_quantity: cart.cart_quantity });
+                    quantity: cart.quantity });
             }
-            return infoCarts;
+            return { count: count, rows: infoCarts };
         }catch(err){
             throw new Error();
         }
     },
-    deleteAll: async (customer_id) => {
+    deleteAll: async (user_id) => {
         try {
             const deletedRows = await Cart.destroy({
-                where: { customer_id: customer_id }
+                where: { user_id: user_id }
             });
             return deletedRows > 0;
         } catch (err) {
             throw new Error();
         }
     },
-    checkItem: async (customer_id, product_id) => {
+    checkItem: async (user_id, product_id) => {
         try{
             const checkItemOnCart = await Cart.findOne({
                 where: {
-                    customer_id: customer_id,
+                    user_id: user_id,
                     product_id: product_id
                 }
             });
