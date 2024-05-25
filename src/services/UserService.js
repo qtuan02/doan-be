@@ -3,14 +3,34 @@ const { User } = require("../configs/models");
 const bcrypt = require('bcrypt');
 
 const userService = {
-    findAll: async () => {
+    findAll: async (query) => {
         try{
-            const users = await User.findAll({
-                where: {
-                    email: { [Op.ne]: "tuan@gmail.com" }
-                }
+            const { phone, page, limit } = query;
+            const whereCondition = {
+                email: { [Op.ne]: "tuan@gmail.com" }
+            };
+
+            if (phone) {
+                whereCondition.phone = phone;
+            }
+
+            const options = {
+                where: whereCondition,
+                order: [['user_id', 'desc']],
+            };
+
+            if (page && limit) {
+                const offset = (page - 1) * limit;
+                options.limit = parseInt(limit);
+                options.offset = parseInt(offset);
+            }
+
+            const count = await User.count({
+                where: whereCondition
             });
-            return users;
+
+            const users = await User.findAll(options);
+            return { count: count, rows: users };
         }catch(err){
             throw new Error();
         }

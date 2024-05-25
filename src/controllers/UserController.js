@@ -7,8 +7,8 @@ const userService = require("../services/UserService");
 
 const userController = {
     findAll: async (req, res) => {
-        const users = await userService.findAll();
-        return res.status(200).send(JsonResponse(200, "ok", users));
+        const users = await userService.findAll(req.query);
+        return res.status(200).send(JsonResponse(200, users.count, users.rows));
     },
     profile: async (req, res) => {
         const tokenObj = await jwtFitler.verifyJwt(jwtFitler.getTokenFromHeader(req));
