@@ -25,6 +25,29 @@ const orderController = {
 
         return res.status(200).send(JsonResponse(200, "", orders));;
     },
+    findOrderDetailByCustomer: async (req, res) => {
+        const tokenObj = await jwtFitler.verifyJwt(jwtFitler.getTokenFromHeader(req));
+        if(!tokenObj){
+            return res.status(400).send(JsonResponse(400, Message.TOKEN_EXPIRED, null));
+        }
+
+        const user = await userService.findByPhoneOrEmail(tokenObj.email);
+        if(!user){
+            return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_USER, null));
+        }
+
+        const order = await orderService.checkOrderByCustomer(req.params.id, user.user_id);
+        if(!order){
+            return res.status(400).send(JsonResponse(400, Message.UNAUTHORIZED, null));
+        }
+
+        const orderdetail = await orderService.findOrderDetailByCustomer(req.params.id);
+        if(!orderdetail){
+            return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_ORDER, null));
+        }
+
+        return res.status(200).send(JsonResponse(200, "", orderdetail));
+    },
     findOrderDetail: async (req, res) => {
         const order = await orderService.findOrderDetail(req.params.id);
         return res.status(200).send(JsonResponse(200, "", order));

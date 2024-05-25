@@ -2,7 +2,29 @@ const { omit } = require("lodash");
 const { Order, OrderDetail, User, Product } = require("../configs/models");
 
 const orderService = {
-    findOrderDetail: async (order_id) => {
+    checkOrderByCustomer: async (order_id, user_id) => {
+        try{
+            const order = await Order.findOne({
+                where: { user_id: user_id, order_id: order_id }
+            });
+
+            return order;
+        }catch(err){
+            throw new Error();
+        }
+    },
+    findOrderByCustomer: async (user_id) => {
+        try{
+            const orders = await Order.findAll({
+                where: { user_id: user_id }
+            });
+
+            return orders.map(order => omit(order.toJSON(), ["user_id"]));
+        }catch(err){
+            throw new Error();
+        }
+    },
+    findOrderDetailByCustomer: async (order_id) => {
         try{
             const orderdetails = await OrderDetail.findAll({
                 where: { order_id: order_id },
@@ -22,22 +44,22 @@ const orderService = {
             throw new Error();
         }
     },
-    findOrderByCustomer: async (user_id) => {
+    findOrderDetail: async (order_id) => {
         try{
-            const orders = await Order.findAll({
-                where: { user_id: user_id }
+            const orderdetails = await OrderDetail.findAll({
+                where: { order_id: order_id },
+                include: [ Product ]
             });
-
-            const formattedOrders = [];
-            for (const order of orders) {
-                const order_detail = await orderService.findOrderDetail(order.order_id);
-                formattedOrders.push({
-                    ...omit(order.toJSON(), ["user_id"]),
-                    order_detail: order_detail
-                });
-            }
-
-            return formattedOrders;
+            const formattedOrderDetails = orderdetails.map(od => {
+                const odJson = od.toJSON();
+                const formattedOrderDetail = omit(odJson, ["product_id"]);
+                if (formattedOrderDetail.product) {
+                    formattedOrderDetail.product = omit(formattedOrderDetail.product, ["category_id", "brand_id", "description", "quantity", "status"]);
+                }
+                return formattedOrderDetail;
+            });
+    
+            return formattedOrderDetails;
         }catch(err){
             throw new Error();
         }

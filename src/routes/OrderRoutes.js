@@ -9,6 +9,7 @@ orderRoutesAdmin.get("/", [authenticate.authenticateToken, authenticate.permissi
 orderRoutesAdmin.get("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], orderController.findOrderDetail);
 
 orderRoutesCustomer.get("/history", orderController.findOrderByCustomer);
+orderRoutesCustomer.get("/history/:id", orderController.findOrderDetailByCustomer);
 orderRoutesCustomer.post("/payment", orderController.paymentOfCart);
 orderRoutesCustomer.post("/pay", orderController.paymentOfAnonymous);
 
