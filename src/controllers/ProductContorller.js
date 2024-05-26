@@ -74,30 +74,23 @@ const productController = {
             return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_PRODUCT, null));
         }
 
-        if(image || category_id || brand_id || product_name || price || description || quantity || status) {
-            const isUpdated = await productService.updateProduct(product_id, 
-                { image, category_id, brand_id, product_name, price, description, quantity, status });
-            if(!isUpdated){
-                return res.status(400).send(JsonResponse(400, Message.UPDATE_PRODUCT_FAIL, null));
-            }
+        const isUpdated = await productService.updateProduct(product_id, 
+            { image, category_id, brand_id, product_name, price, description, quantity, status });
+        if(!isUpdated){
+            return res.status(400).send(JsonResponse(400, Message.UPDATE_PRODUCT_FAIL, null));
         }
-
-        if(image && images.length > 0){
-            const savedImages = [];
-            try{
-                for(let i=0; i < images.length; i++){
-                    const createImage = await imageService.createImage({url: images[i], product_id: product_id});
-                    savedImages.push(createImage);
-                }
-            }catch(err){
-                throw new Error();
-            }
-            if(savedImages.length !== images.length){
-                return res.status(400).send(JsonResponse(400, Message.CREATE_IMAGE_FAIL, null));
-            }
-        }
+    
 
         return res.status(200).send(JsonResponse(200, Message.UPDATE_PRODUCT_SUCCESS, true));
+    },
+    createImageDescription: async (req, res) => {
+        const { url, product_id } = req.body;
+        const newImage = await imageService.createImage({url, product_id});
+        if(!newImage){
+            return res.status(400).send(JsonResponse(400, Message.IMAGE_FAIL, null));
+        }
+
+        return res.status(200).send(JsonResponse(200, Message.IMAGE_SUCCESS, true));
     },
     deleteImageDescription: async(req, res) => {
         const image_id = req.params.id;
@@ -112,26 +105,6 @@ const productController = {
         }
 
         return res.status(200).send(JsonResponse(200, Message.DELETE_IMAGE_SUCCESS, true));
-    },
-    updateImageDescription: async(req, res) => {
-        const image_id = req.params.id;
-        const { url } = req.body;
-
-        if(!image_id || !url){
-            return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
-        }
-
-        const image = await imageService.findOne(image_id);
-        if(!image){
-            return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_IMAGE, null));
-        }
-
-        const isUpdated = await imageService.updateImage(image_id, url);
-        if(!isUpdated){
-            return res.status(400).send(JsonResponse(400, Message.UPDATE_IMAGE_FAIL, null));
-        }
-
-        return res.status(200).send(JsonResponse(200, Message.UPDATE_IMAGE_SUCCESS, true));
     }
 }
 

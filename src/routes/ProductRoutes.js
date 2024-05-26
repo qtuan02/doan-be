@@ -10,7 +10,7 @@ productRoutes.post("/", [authenticate.authenticateToken, authenticate.permission
 productRoutes.delete("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], productController.deleteProduct);
 productRoutes.put("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], productController.updateProduct);
 
+productRoutes.post("/image", [authenticate.authenticateToken, authenticate.permission(['admin'])], productController.createImageDescription);
 productRoutes.delete("/image/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], productController.deleteImageDescription);
-productRoutes.put("/image/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], productController.updateImageDescription);
 
 module.exports = productRoutes;

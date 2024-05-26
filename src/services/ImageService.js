@@ -28,6 +28,14 @@ const imageService = {
             throw new Error();
         }
     },
+    createProductImage: async (newImage) => {
+        try {
+            const newImage = await Image.create(newImage);
+            return newImage;
+        } catch (err) {
+            throw new Error();
+        }
+    },
     deleteImages: async (product_id) => {
         try{
             const deleteRows = await Image.destroy({

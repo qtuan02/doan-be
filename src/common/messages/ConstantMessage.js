@@ -35,6 +35,8 @@ class Message{
     static UPDATE_PRODUCT_FAIL = "Cập nhật sản phẩm thất bại!";
 
     static CREATE_IMAGE_FAIL = "Tạo danh sách ảnh thất bại!";
+    static IMAGE_FAIL = "Thêm ảnh thất bại!";
+    static IMAGE_SUCCESS = "Thêm ảnh thành công.";
 
     static NOT_FOUND_CATEGORY = "Không tìm thấy danh mục!";
     static CREATE_CATEGORY_SUCCESS = "Tạo danh mục thành công.";
