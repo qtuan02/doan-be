@@ -67,17 +67,34 @@ const productController = {
     },
     updateProduct: async(req, res) => {
         const product_id = req.params.id;
-        const {  image, category_id, brand_id, product_name, price, description, quantity, status } = req.body;
+        const { image, category_id, brand_id, product_name, price, description, quantity, status, images } = req.body;
             
-        const oldProduct = await productService.findProductById(product_id);
+        const oldProduct = await productService.findOne(product_id);
         if(!oldProduct){
             return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_PRODUCT, null));
         }
 
-        const newProduct = await productService.updateProduct(product_id, 
-            {image, category_id, brand_id, product_name, price, description, quantity, status});
-        if(!newProduct){
-            return res.status(400).send(JsonResponse(400, Message.UPDATE_PRODUCT_FAIL, null));
+        if(image || category_id || brand_id || product_name || price || description || quantity || status) {
+            const isUpdated = await productService.updateProduct(product_id, 
+                { image, category_id, brand_id, product_name, price, description, quantity, status });
+            if(!isUpdated){
+                return res.status(400).send(JsonResponse(400, Message.UPDATE_PRODUCT_FAIL, null));
+            }
+        }
+
+        if(image && images.length > 0){
+            const savedImages = [];
+            try{
+                for(let i=0; i < images.length; i++){
+                    const createImage = await imageService.createImage({url: images[i], product_id: product_id});
+                    savedImages.push(createImage);
+                }
+            }catch(err){
+                throw new Error();
+            }
+            if(savedImages.length !== images.length){
+                return res.status(400).send(JsonResponse(400, Message.CREATE_IMAGE_FAIL, null));
+            }
         }
 
         return res.status(200).send(JsonResponse(200, Message.UPDATE_PRODUCT_SUCCESS, true));

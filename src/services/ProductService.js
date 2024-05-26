@@ -32,7 +32,7 @@ const productService = {
                 where: { product_id: product_id }
             });
             
-            return updateProduct > 0;
+            return updateProduct;
         }catch(err){
             throw new Error();
         }
