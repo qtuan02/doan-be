@@ -4,6 +4,8 @@ class Message{
     static ADD_ORDER_SUCCESS = "Đặt hàng thành công.";
     static NOT_FOUND_PRODUCT_CART = "Giỏ hàng không có sản phẩm nào!";
     static NOT_FOUND_ORDER = "Không tìm thấy danh sách đặt hàng!";
+    static UPDATE_ORDER_FAIL = "Cập nhật trạng thái đặt hàng thất bại!";
+    static UPDATE_ORDER_SUCCSES = "Cập nhật trạng thái đặt hàng thành công.";
 
     static ADD_ITEM_FAIL = "Thêm sản phẩm vào giỏ hàng thất bại!";
     static ADD_ITEM_SUCCESS = "Thêm sản phẩm vào giỏ hàng thành công.";

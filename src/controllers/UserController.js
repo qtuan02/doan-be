@@ -132,28 +132,34 @@ const userController = {
         return res.status(200).send(JsonResponse(200, Message.CREATE_USER_SUCCESS, newUser));
     },
     updateUser: async (req, res) => {
-        const { firstname, lastname, address, phone, email, password, role } = req.body;
+        const { firstname, lastname, address, phone, email, password, status, role } = req.body;
         const user_id = req.params.id;
-        if(!user_id || !firstname || !lastname || !address || !phone || !email || !password){
-            return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
+
+        const user = await userService.findOne(user_id);
+        if(!user){
+            return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_USER, null));
+        }
+        
+        if(phone){
+            const isPhone = await userService.checkPhone(phone, user_id);
+            if(isPhone > 0){
+                return res.status(400).send(JsonResponse(400, Message.PHONE_EXIST, null));
+            }
         }
 
-        const isEmail = await userService.countByPhoneOrEmail(email);
-        if(isEmail > 1){
-            return res.status(400).send(JsonResponse(400, Message.EMAIL_EXIST, null));
+        if(email){
+            const isEmail = await userService.checkEmail(email, user_id);
+            if(isEmail > 0){
+                return res.status(400).send(JsonResponse(400, Message.EMAIL_EXIST, null));
+            }
         }
-
-        const isPhone = await userService.countByPhoneOrEmail(phone);
-        if(isPhone > 1){
-            return res.status(400).send(JsonResponse(400, Message.PHONE_EXIST, null));
-        }
-
-        const updateUser = await userService.updateUser(user_id, { firstname, lastname, address, phone, email, password, role });
+        
+        const updateUser = await userService.updateUser(user_id, { firstname, lastname, address, phone, email, password, status, role });
         if(!updateUser){
-            return res.status(400).send(JsonResponse(400, Message.CREATE_USER_FAIL, null));
+            return res.status(400).send(JsonResponse(400, Message.UPDATE_USER_FAIL, null));
         }
 
-        return res.status(200).send(JsonResponse(200, Message.UPDATE_USER_SUCCESS, updateUser));
+        return res.status(200).send(JsonResponse(200, Message.UPDATE_USER_SUCCESS, true));
     }
 }
 

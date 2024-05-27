@@ -3,16 +3,26 @@ const { User } = require("../configs/models");
 const bcrypt = require('bcrypt');
 
 const userService = {
+    findOne: async (user_id) => {
+        try{
+            const user = await User.findOne({
+                where: { user_id: user_id }
+            });
+            return user;
+        }catch(err){
+            throw new Error();
+        }
+    },
     findAll: async (query) => {
         try{
-            const { phone, page, limit } = query;
+            const { phone, page, limit, status, role } = query;
             const whereCondition = {
                 email: { [Op.ne]: "tuan@gmail.com" }
             };
 
-            if (phone) {
-                whereCondition.phone = phone;
-            }
+            if (phone) { whereCondition.phone = phone }
+            if (status) { whereCondition.status = status }
+            if (role) { whereCondition.role = role }
 
             const options = {
                 where: whereCondition,
@@ -50,14 +60,33 @@ const userService = {
             throw new Error();
         }
     },
-    countByPhoneOrEmail: async (account) => {
+    checkPhone: async (phone, user_id) => {
         try{
             const count = await User.count({
                 where: {
                     [Op.or]: [
-                        { phone: account },
-                        { email: account }
-                    ]
+                        { phone: phone }
+                    ],
+                    user_id: {
+                        [Op.ne]: user_id
+                    }
+                }
+            });
+            return count;
+        }catch(err){
+            throw new Error();
+        }
+    },
+    checkEmail: async (email, user_id) => {
+        try{
+            const count = await User.count({
+                where: {
+                    [Op.or]: [
+                        { email: email }
+                    ],
+                    user_id: {
+                        [Op.ne]: user_id
+                    }
                 }
             });
             return count;

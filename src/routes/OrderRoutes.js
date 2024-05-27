@@ -7,6 +7,7 @@ const orderRoutesCustomer = Router();
 
 orderRoutesAdmin.get("/", [authenticate.authenticateToken, authenticate.permission(['admin'])], orderController.findAll);
 orderRoutesAdmin.get("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], orderController.findOrderDetail);
+orderRoutesAdmin.put("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], orderController.updateStatusOrder);
 
 orderRoutesCustomer.get("/history", orderController.findOrderByCustomer);
 orderRoutesCustomer.get("/history/:id", orderController.findOrderDetailByCustomer);

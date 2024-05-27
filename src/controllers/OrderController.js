@@ -115,6 +115,21 @@ const orderController = {
         }
 
         return res.status(200).send(JsonResponse(200, Message.ADD_ORDER_SUCCESS, null));
+    },
+    updateStatusOrder: async (req, res) => {
+        const { status } = req.body;
+        const order = await orderService.findOne(req.params.id);
+
+        if(!order){
+            return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_ORDER, null));
+        }
+
+        const isUpdated = await orderService.updateStatusOrder(order.order_id, status);
+        if(!isUpdated){
+            return res.status(400).send(JsonResponse(400, Message.UPDATE_ORDER_FAIL, null));
+        }
+
+        return res.status(200).send(JsonResponse(200, Message.UPDATE_ORDER_SUCCSES, isUpdated));
     }
 }
 

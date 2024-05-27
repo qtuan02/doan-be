@@ -2,6 +2,16 @@ const { omit } = require("lodash");
 const { Order, OrderDetail, User, Product } = require("../configs/models");
 
 const orderService = {
+    findOne: async (order_id) => {
+        try{
+            const order = await Order.findOne({
+                where: { order_id: order_id }
+            });
+            return order;
+        }catch(err){
+            throw new Error();
+        }
+    },
     checkOrderByCustomer: async (order_id, user_id) => {
         try{
             const order = await Order.findOne({
@@ -174,6 +184,17 @@ const orderService = {
             });
 
             return deleteAll ;
+        }catch(err){
+            throw new Error();
+        }
+    },
+    updateStatusOrder: async (order_id, status) => {
+        try{
+            const isUpdated = await Order.update({ status: status }, {
+                where: { order_id: order_id }
+            });
+            
+            return isUpdated > 0;
         }catch(err){
             throw new Error();
         }
