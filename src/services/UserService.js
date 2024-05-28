@@ -20,7 +20,9 @@ const userService = {
                 email: { [Op.ne]: "tuan@gmail.com" }
             };
 
-            if (phone) { whereCondition.phone = phone }
+            if (phone) { whereCondition.phone = {
+                [Op.like]: `%${phone}%`
+            }};
             if (status) { whereCondition.status = status }
             if (role) { whereCondition.role = role }
 
