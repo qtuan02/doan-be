@@ -1,5 +1,6 @@
 const { omit } = require("lodash");
 const { Order, OrderDetail, User, Product } = require("../configs/models");
+const { Op } = require("sequelize");
 
 const orderService = {
     findOne: async (order_id) => {
@@ -76,12 +77,16 @@ const orderService = {
     },
     findOrders: async (query) => {
         try{
-            const { phone, status, page, limit } = query;
+            const { phone, fullname, status, page, limit } = query;
             const whereCondition = {};
-            const whereConditionCustomer = {};
             
 
-            if(phone) { whereConditionCustomer.phone = phone };
+            if(phone) { whereCondition.phone = {
+                [Op.like]: `%${phone}%`
+            }};
+            if(fullname) { whereCondition.fullname = {
+                [Op.like]: `%${fullname}%`
+            }};
             if(status) { whereCondition.status = status };
 
             const options = {
@@ -89,7 +94,6 @@ const orderService = {
                 order: [['order_id', 'desc']],
                 include: [{
                     model: User,
-                    where: whereConditionCustomer
                 }],
             };
 
@@ -103,7 +107,6 @@ const orderService = {
                 where: whereCondition,
                 include: [{
                     model: User,
-                    where: whereConditionCustomer
                 }],
             });
 
