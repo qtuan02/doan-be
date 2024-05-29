@@ -5,7 +5,7 @@ const authenticate = require("../common/securities/middleware");
 const userRoutesAdmin = Router();
 const userRoutesUser = Router();
 
-userRoutesAdmin.get('/', [authenticate.authenticateToken, authenticate.permission(['admin'])], userController.findAll);
+userRoutesAdmin.get('/', [authenticate.authenticateToken, authenticate.permission(['admin', 'staff'])], userController.findAll);
 userRoutesAdmin.post('/', [authenticate.authenticateToken, authenticate.permission(['admin'])], userController.createUser);
 userRoutesAdmin.put('/:id', [authenticate.authenticateToken, authenticate.permission(['admin'])], userController.updateUser);
 userRoutesUser.get('/profile', userController.profile);

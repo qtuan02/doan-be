@@ -5,8 +5,8 @@ const orderController = require("../controllers/OrderController");
 const orderRoutesAdmin = Router();
 const orderRoutesCustomer = Router();
 
-orderRoutesAdmin.get("/", [authenticate.authenticateToken, authenticate.permission(['admin'])], orderController.findAll);
-orderRoutesAdmin.get("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], orderController.findOrderDetail);
+orderRoutesAdmin.get("/", [authenticate.authenticateToken, authenticate.permission(['admin', 'staff'])], orderController.findAll);
+orderRoutesAdmin.get("/:id", [authenticate.authenticateToken, authenticate.permission(['admin', 'staff'])], orderController.findOrderDetail);
 orderRoutesAdmin.put("/:id", [authenticate.authenticateToken, authenticate.permission(['admin'])], orderController.updateStatusOrder);
 
 orderRoutesCustomer.get("/history", orderController.findOrderByCustomer);
