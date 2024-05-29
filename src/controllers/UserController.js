@@ -109,7 +109,7 @@ const userController = {
         return res.status(200).send(JsonResponse(200, Message.UPDATE_USER_SUCCESS, null));
     },
     createUser: async (req, res) => {
-        const { firstname, lastname, address, phone, email, password, role } = req.body;
+        const { firstname, lastname, address, gender, birth, phone, email, password, status, role } = req.body;
         if(!firstname || !lastname || !address || !phone || !email || !password){
             return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
         }
@@ -124,7 +124,7 @@ const userController = {
             return res.status(400).send(JsonResponse(400, Message.PHONE_EXIST, null));
         }
 
-        const newUser = await userService.createUser({ firstname, lastname, address, phone, email, password, role });
+        const newUser = await userService.createUser({ firstname, lastname, address, phone, gender, birth, email, password, status, role });
         if(!newUser){
             return res.status(400).send(JsonResponse(400, Message.CREATE_USER_FAIL, null));
         }

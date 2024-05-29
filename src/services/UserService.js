@@ -101,7 +101,9 @@ const userService = {
     },
     createUser: async (user) => {
         try{
-            user.status = await 1;
+            if(!user.status){
+                user.status = await 1;
+            }
             user.password = await bcrypt.hash(user.password, 11);
             const newUser = await User.create(user);
             return newUser;
