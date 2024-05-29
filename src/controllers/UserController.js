@@ -62,7 +62,7 @@ const userController = {
             return res.status(400).send(JsonResponse(400, Message.WRONG_PASSWORD, null));
         }
 
-        if(user.status === 0){
+        if(user.status === false){
             return res.status(400).send(JsonResponse(400, Message.STATUS_FALSE, null));
         }
 
