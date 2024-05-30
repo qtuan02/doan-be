@@ -77,16 +77,16 @@ const orderService = {
     },
     findOrders: async (query) => {
         try{
-            const { phone, fullname, status, page, limit } = query;
+            const { search, status, page, limit } = query;
             const whereCondition = {};
             
 
-            if(phone) { whereCondition.phone = {
-                [Op.like]: `%${phone}%`
-            }};
-            if(fullname) { whereCondition.fullname = {
-                [Op.like]: `%${fullname}%`
-            }};
+            if(search) { 
+                whereCondition[Op.or] = [
+                    { phone: { [Op.like]: `%${search}%` } },
+                    { fullName: { [Op.like]: `%${search}%` } }
+                ];
+            };
             if(status) { whereCondition.status = status };
 
             const options = {
