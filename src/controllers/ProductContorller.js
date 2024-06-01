@@ -6,13 +6,13 @@ const imageService = require("../services/ImageService");
 
 const productController = {
     createProduct: async (req, res) => {
-        const { image, category_id, brand_id, product_name, price, description, quantity, status, images } = req.body;
+        const { image, category_id, brand_id, product_name, price, description, quantity, status, promotion, quantity_sold, images } = req.body;
         if(!image || !category_id || !brand_id || !product_name || !price || !quantity || !status){
             return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
         }
 
         const product = await productService.createProduct({image, category_id, brand_id,
-            product_name, price, description, quantity, status});
+            product_name, price, description, quantity, status, promotion, quantity_sold});
         
         if(!product){
             return res.status(400).send(JsonResponse(400, Message.CREATE_PRODUCT_FAIL, null));
@@ -67,7 +67,7 @@ const productController = {
     },
     updateProduct: async(req, res) => {
         const product_id = req.params.id;
-        const { image, category_id, brand_id, product_name, price, description, quantity, status, images } = req.body;
+        const { image, category_id, brand_id, product_name, price, description, quantity, status, promotion, quantity_sold } = req.body;
             
         const oldProduct = await productService.findOne(product_id);
         if(!oldProduct){
@@ -75,7 +75,7 @@ const productController = {
         }
 
         const isUpdated = await productService.updateProduct(product_id, 
-            { image, category_id, brand_id, product_name, price, description, quantity, status });
+            { image, category_id, brand_id, product_name, price, description, quantity, status, promotion, quantity_sold });
         if(!isUpdated){
             return res.status(400).send(JsonResponse(400, Message.UPDATE_PRODUCT_FAIL, null));
         }

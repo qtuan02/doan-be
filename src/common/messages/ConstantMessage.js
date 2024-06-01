@@ -56,11 +56,19 @@ class Message{
     static UPDATE_BRAND_SUCCESS = "Cập nhật thương hiệu thành công.";
     static UPDATE_BRAND_FAIL = "Cập nhật thương hiệu thất bại!";
 
+
     static NOT_FOUND_IMAGE = "Ảnh không tồn tại!";
     static DELETE_IMAGE_FAIL = "Đã có lỗi xảy ra với việc xóa ảnh!";
     static DELETE_IMAGE_SUCCESS = "Xóa ảnh thành công.";
     static UPDATE_IMAGE_SUCCESS = "Cập nhật ảnh thành công.";
     static UPDATE_IMAGE_FAIL = "Cập nhật ảnh thất bại!";
+
+    static NOT_FOUND_FAVORITE = "Không tìm thấy sản phẩm trong danh sách yêu thích!";
+    static PRODUCT_EXIST_FAVORITE = "Sản phẩm đã có trong danh sách yêu thích!";
+    static CREATE_FAVORITE_FAIL = "Thêm vào danh sách yêu thích thất bại!";
+    static CREATE_FAVORITE_SUCCESS = "Thêm vào danh sách yêu thích thành công.";
+    static DELETE_FAVORITE_FAIL = "Xóa khỏi danh sách yêu thích thất bại!";
+    static DELETE_FAVORITE_SUCCESS = "Xóa khỏi danh sách yêu thích thành công.";
 
     static LOGIN_SUCCESS = "Đăng nhập thành công.";
     static LOGIN_FAIL = "Đăng nhập thất bại!";

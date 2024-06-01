@@ -6,6 +6,8 @@ const { omit } = require("lodash");
 
 const productService = {
     createProduct: async (product) => {
+        product.promotion = product.promotion || 0;
+        product.quantity_sold = product.quantity_sold || 0;
         try{
             const newProduct = await Product.create(product);
             return newProduct;
@@ -54,7 +56,7 @@ const productService = {
     },
     findProducts: async (query) => {
         try{
-            const { brand_id, category_id, product_name, status, page, limit } = query;
+            const { brand_id, category_id, product_name, status, promotion, quantity_sold, page, limit } = query;
             const whereCondition = {};
 
             if(brand_id){ whereCondition.brand_id = brand_id };
@@ -65,6 +67,27 @@ const productService = {
                 };
             };
             if(status) { whereCondition.status = status };
+            if(promotion) { whereCondition.promotion = promotion };
+
+            if(quantity_sold) {
+                const options = {
+                    order: [['quantity_sold', 'DESC']],
+                    include: [ Category, Brand ],
+                    limit: parseInt(quantity_sold)
+                };
+
+                const products = await Product.findAll(options);
+
+                const formattedProducts = [];
+                for (const product of products) {
+                    const formattedProduct = product.toJSON();
+                    formattedProduct.brand_name = product.brand.brand_name;
+                    formattedProduct.category_name = product.category.category_name;
+                    formattedProducts.push(formattedProduct);
+                }
+
+                return {count: quantity_sold, rows: formattedProducts.map(p => omit(p, ['brand_id', 'category_id', 'brand', 'category']))};
+            }
 
             const options = {
                 where: whereCondition,
@@ -76,19 +99,21 @@ const productService = {
                 const offset = (page - 1) * limit;
                 options.limit = parseInt(limit);
                 options.offset = parseInt(offset);
-            }
+            };
 
             const count = await Product.count({
                 where: whereCondition,
             });
+
+
 
             const products = await Product.findAll(options);
 
             const formattedProducts = [];
             for (const product of products) {
                 const formattedProduct = product.toJSON();
-                const images = await imageService.findByProductId(product.product_id);
-                formattedProduct.images = images.map(image => image.url);
+                // const images = await imageService.findByProductId(product.product_id);
+                // formattedProduct.images = images.map(image => image.url);
                 formattedProduct.brand_name = product.brand.brand_name;
                 formattedProduct.category_name = product.category.category_name;
                 formattedProducts.push(formattedProduct);

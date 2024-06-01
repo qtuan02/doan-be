@@ -57,6 +57,14 @@ const Product = sequelize.define("products", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  promotion: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  quantity_sold: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   status: {
     type: DataTypes.STRING(30),
     allowNull: false,
@@ -214,6 +222,23 @@ const OrderDetail = sequelize.define("order_detail", {
     timestamps: false
 });
 
+const Favorite = sequelize.define("favorites", {
+  favorite_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  product_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  }
+}, {
+    timestamps: false
+});
 
 Product.belongsTo(Category, { foreignKey: "category_id" });
 Product.belongsTo(Brand, { foreignKey: "brand_id" });
@@ -223,6 +248,8 @@ OrderDetail.belongsTo(Order, { foreignKey: "order_id" });
 Order.belongsTo(User, { foreignKey: "user_id" });
 Cart.belongsTo(User, { foreignKey: "user_id" });
 Cart.belongsTo(Product, { foreignKey: "product_id" });
+Favorite.belongsTo(Product, { foreignKey: "product_id" });
+Favorite.belongsTo(User, { foreignKey: "user_id" });
 
 module.exports = {
   Category,
@@ -232,5 +259,6 @@ module.exports = {
   User,
   Order,
   OrderDetail,
-  Image
+  Image,
+  Favorite
 };
