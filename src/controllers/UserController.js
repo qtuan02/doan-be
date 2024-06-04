@@ -103,6 +103,8 @@ const userController = {
         if(!user){
             return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_USER, null));
         }
+
+        const { firstname, lastname, address, birth, gender, phone } = req.body;
         
         if(phone){
             const isPhone = await userService.checkPhone(phone, user.user_id);
@@ -110,8 +112,6 @@ const userController = {
                 return res.status(400).send(JsonResponse(400, Message.PHONE_EXIST, null));
             }
         }
-
-        const { firstname, lastname, address, birth, gender, phone } = req.body;
         
         const newProfile = await userService.changeProfile(tokenObj.email, { firstname, lastname, address, birth, gender, phone });
         if(!newProfile){
