@@ -99,9 +99,21 @@ const userController = {
             return res.status(400).send(JsonResponse(400, Message.TOKEN_EXPIRED, null));
         }
 
-        const { firstname, lastname, address, birth, gender } = req.body;
+        const user = await userService.findByPhoneOrEmail(tokenObj.email);
+        if(!user){
+            return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_USER, null));
+        }
         
-        const newProfile = await userService.changeProfile(tokenObj.email, { firstname, lastname, address, birth, gender });
+        if(phone){
+            const isPhone = await userService.checkPhone(phone, user.user_id);
+            if(isPhone > 0){
+                return res.status(400).send(JsonResponse(400, Message.PHONE_EXIST, null));
+            }
+        }
+
+        const { firstname, lastname, address, birth, gender, phone } = req.body;
+        
+        const newProfile = await userService.changeProfile(tokenObj.email, { firstname, lastname, address, birth, gender, phone });
         if(!newProfile){
             return res.status(400).send(JsonResponse(400, Message.UPDATE_USER_FAIL, null));
         }
