@@ -70,6 +70,12 @@ class Message{
     static DELETE_FAVORITE_FAIL = "Xóa khỏi danh sách yêu thích thất bại!";
     static DELETE_FAVORITE_SUCCESS = "Xóa khỏi danh sách yêu thích thành công.";
 
+    static NOT_FOUND_BANNER = "Không tìm thấy quảng cáo!";
+    static CREATE_BANNER_FAIL = "Tạo quảng cáo thất bại!";
+    static CREATE_BANNER_SUCCESS = "Tạo quảng cáo thành công.";
+    static DELETE_BANNER_FAIL = "Xóa quảng cáo thất bại!";
+    static DELETE_BANNER_SUCCESS = "Xóa quảng cáo thành công.";
+
     static LOGIN_SUCCESS = "Đăng nhập thành công.";
     static LOGIN_FAIL = "Đăng nhập thất bại!";
     

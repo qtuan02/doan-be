@@ -1,11 +1,28 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./connection");
 
+const Banner = sequelize.define("banners", {
+  banner_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  banner_image: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  }
+}, {
+  timestamps: false
+});
+
 const Category = sequelize.define("categories", {
   category_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
+  },
+  category_image: {
+    type: DataTypes.STRING(255),
   },
   category_name: {
     type: DataTypes.STRING(50),
@@ -252,6 +269,7 @@ Favorite.belongsTo(Product, { foreignKey: "product_id" });
 Favorite.belongsTo(User, { foreignKey: "user_id" });
 
 module.exports = {
+  Banner,
   Category,
   Brand,
   Product,

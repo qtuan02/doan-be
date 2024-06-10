@@ -8,9 +8,11 @@ const brandRoutes = require('./BrandRoutes');
 const productRoutes = require('./ProductRoutes');
 const { orderRoutesAdmin } = require('./OrderRoutes');
 const dashboardRoutes = require('./DashboardRoutes');
+const bannerRoutes = require('./BannerRoutes');
 
 const routes = Router();
 
+routes.use('/banner', bannerRoutes);
 routes.use('/dashboard', dashboardRoutes);
 routes.use('/upload', uploadRoutes);
 routes.use('/user', userRoutesAdmin);

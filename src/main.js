@@ -1,5 +1,5 @@
 const express = require("express");
-const { Category,Brand,Product,Cart,User,Order,OrderDetail,Favorite } = require("./configs/models");
+const { Banner, Category, Brand, Product, Cart, User, Order, OrderDetail, Favorite } = require("./configs/models");
 const appConfig = require("./configs/env.config");
 const sequelize = require("./configs/connection");
 const cors = require("cors");
@@ -16,23 +16,12 @@ app.use(limiter);
 app.use('/v1', admin);
 app.use('/v2', user);
 
-app.listen(appConfig.PORT, () => {
+app.listen(appConfig.PORT, async () => {
   console.log(`Running port ${appConfig.PORT}.`);
-
-  sequelize
-    .authenticate()
-    .then(() => {
-      console.log("Connected successfully.");
-    })
-    .catch((error) => {
-      console.error("Failed to connect", error);
-    });
-  sequelize
-    .sync()
-    .then(() => {
-      console.log("Created all table successfully.");
-    })
-    .catch((error) => {
-      console.error("Failed to create table", error);
-    });
+  try {
+    await sequelize.sync();
+    console.log('Create all table success.');
+  } catch (error) {
+    console.error('Failed to create table:', error);
+  }
 });

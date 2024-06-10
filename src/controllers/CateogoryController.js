@@ -4,12 +4,12 @@ const JsonResponse = require("../common/reponses/JsonResponse");
 
 const categoryController = {
     createCategory: async (req, res) => {
-        const { category_name } = req.body;
+        const { category_image, category_name } = req.body;
         if (!category_name) {
             return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
         }
 
-        const category = await categoryService.createCategory({ category_name });
+        const category = await categoryService.createCategory({ category_image, category_name });
 
         if (!category) {
             return res.status(400).send(JsonResponse(400, Message.CREATE_CATEGORY_FAIL, null));
@@ -36,14 +36,14 @@ const categoryController = {
     },
     updateCategory: async (req, res) => {
         const category_id = req.params.id;
-        const { category_name } = req.body;
+        const { category_image, category_name } = req.body;
 
         const oldCategory = await categoryService.findCategoryById(category_id);
         if (!oldCategory) {
             return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_CATEGORY, null));
         }
 
-        const newCategory = await categoryService.updateCategory(category_id, { category_name });
+        const newCategory = await categoryService.updateCategory(category_id, { category_image, category_name });
         if (!newCategory) {
             return res.status(400).send(JsonResponse(400, Message.UPDATE_CATEGORY_FAIL, null));
         }
