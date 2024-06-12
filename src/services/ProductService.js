@@ -71,13 +71,14 @@ const productService = {
 
             if(quantity_sold) {
                 const options = {
+                    where: { status: 'true' },
                     order: [['quantity_sold', 'DESC']],
                     include: [ Category, Brand ],
                     limit: parseInt(quantity_sold)
                 };
 
                 const products = await Product.findAll(options);
-
+                const count = await products.length;
                 const formattedProducts = [];
                 for (const product of products) {
                     const formattedProduct = product.toJSON();
@@ -86,7 +87,7 @@ const productService = {
                     formattedProducts.push(formattedProduct);
                 }
 
-                return {count: quantity_sold, rows: formattedProducts.map(p => omit(p, ['brand_id', 'category_id', 'brand', 'category']))};
+                return {count: count, rows: formattedProducts.map(p => omit(p, ['brand_id', 'category_id', 'brand', 'category', 'description']))};
             }
 
             const options = {
