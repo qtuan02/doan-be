@@ -280,3 +280,4 @@ module.exports = {
   Image,
   Favorite
 };
+
