@@ -3,7 +3,7 @@ const Message = require("../common/messages/ConstantMessage");
 const JsonResponse = require("../common/reponses/JsonResponse");
 const jwtFitler = require("../common/securities/jwt");
 const userService = require("../services/UserService");
-
+const pusher = require("../configs/pusher");
 
 const userController = {
     findAll: async (req, res) => {
@@ -141,6 +141,7 @@ const userController = {
             return res.status(400).send(JsonResponse(400, Message.CREATE_USER_FAIL, null));
         }
 
+        pusher.trigger("user", "user-add", { newUser });
         return res.status(200).send(JsonResponse(200, Message.CREATE_USER_SUCCESS, newUser));
     },
     updateUser: async (req, res) => {
@@ -171,6 +172,7 @@ const userController = {
             return res.status(400).send(JsonResponse(400, Message.UPDATE_USER_FAIL, null));
         }
 
+        pusher.trigger("user", "user-update", { updateUser });
         return res.status(200).send(JsonResponse(200, Message.UPDATE_USER_SUCCESS, true));
     }
 }

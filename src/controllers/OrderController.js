@@ -4,7 +4,7 @@ const jwtFitler = require("../common/securities/jwt");
 const cartService = require("../services/CartService");
 const orderService = require("../services/OrderService");
 const userService = require("../services/UserService");
-
+const pusher = require("../configs/pusher");
 
 const orderController = {
     findOrderByCustomer: async (req, res) => {
@@ -94,6 +94,7 @@ const orderController = {
             console.log("Delete all cart fail!")
         }
 
+        pusher.trigger("order", "order-add-user", { order });
         return res.status(200).send(JsonResponse(200, Message.ADD_ORDER_SUCCESS, null));
     },
     paymentOfAnonymous: async (req, res) => {
@@ -114,6 +115,7 @@ const orderController = {
             return res.status(400).send(JsonResponse(400, Message.ADD_ORDER_FAIL, null));
         }
 
+        pusher.trigger("order", "order-add-public", { order });
         return res.status(200).send(JsonResponse(200, Message.ADD_ORDER_SUCCESS, null));
     },
     updateStatusOrder: async (req, res) => {
@@ -129,6 +131,7 @@ const orderController = {
             return res.status(400).send(JsonResponse(400, Message.UPDATE_ORDER_FAIL, null));
         }
 
+        pusher.trigger("order", "order-update", { isUpdated });
         return res.status(200).send(JsonResponse(200, Message.UPDATE_ORDER_SUCCSES, isUpdated));
     }
 }

@@ -1,6 +1,7 @@
 const categoryService = require("../services/CategoryService");
 const Message = require("../common/messages/ConstantMessage");
 const JsonResponse = require("../common/reponses/JsonResponse");
+const pusher = require("../configs/pusher");
 
 const categoryController = {
     createCategory: async (req, res) => {
@@ -15,6 +16,7 @@ const categoryController = {
             return res.status(400).send(JsonResponse(400, Message.CREATE_CATEGORY_FAIL, null));
         }
 
+        pusher.trigger("category", "category-add", { category });
         return res.status(200).send(JsonResponse(200, Message.CREATE_CATEGORY_SUCCESS, category));
     },
     findCategories: async (req, res) => {
@@ -32,6 +34,7 @@ const categoryController = {
             return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_CATEGORY, null));
         }
 
+        pusher.trigger("category", "category-delete", { isDeleted });
         return res.status(200).send(JsonResponse(200, Message.DELETE_CATEGORY_SUCCESS, null));
     },
     updateCategory: async (req, res) => {
@@ -48,6 +51,7 @@ const categoryController = {
             return res.status(400).send(JsonResponse(400, Message.UPDATE_CATEGORY_FAIL, null));
         }
 
+        pusher.trigger("category", "category-update", { newCategory });
         return res.status(200).send(JsonResponse(200, Message.UPDATE_CATEGORY_SUCCESS, null));
     }
 }
