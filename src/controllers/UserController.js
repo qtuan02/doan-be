@@ -24,8 +24,8 @@ const userController = {
         return res.status(200).send(JsonResponse(200, Message.FOUND_USER_SUCCESS, omit(user.toJSON(), ['password', 'role', 'status'])));
     },
     register: async (req, res) => {
-        const { firstname, lastname, address, phone, email, password } = req.body;
-        if(!firstname || !lastname || !address || !phone || !email || !password){
+        const { phone, email, password } = req.body;
+        if(!phone || !email || !password){
             return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
         }
 
@@ -39,7 +39,7 @@ const userController = {
             return res.status(400).send(JsonResponse(400, Message.PHONE_EXIST, null));
         }
 
-        const newUser = await userService.createUser({ firstname, lastname, address, phone, email, password });
+        const newUser = await userService.createUser({ phone, email, password });
         if(!newUser){
             return res.status(400).send(JsonResponse(400, Message.CREATE_USER_FAIL, null));
         }
