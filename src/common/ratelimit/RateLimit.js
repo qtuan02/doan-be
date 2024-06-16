@@ -3,7 +3,7 @@ const JsonReponse = require('../reponses/JsonResponse');
 
 const limiter = rateLimit({
 	windowMs: 10 * 60 * 1000, // 10 phút
-	limit: 200, // 200 yêu cầu
+	limit: 100, // 100 yêu cầu
 	standardHeaders: true,
     legacyHeaders: false,
 	message: JsonReponse(429, "Quá nhiều yêu cầu trong 5 giây!", null)

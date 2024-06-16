@@ -92,6 +92,9 @@ class Message{
 
     static UNAUTHORIZED = "Không có quyền truy cập!";
     static TOKEN_EXPIRED = "Tài khoản đã hết hạn đăng nhập!";
+
+    static SEND_MAIL_FAIL = "Gửi email thất bại!";
+    static SEND_MAIL_SUCCESS = "Gửi email thành công.";
 }
 
 module.exports = Message;

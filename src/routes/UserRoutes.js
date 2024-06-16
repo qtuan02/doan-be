@@ -13,6 +13,7 @@ userRoutesUser.post('/register', userController.register);
 userRoutesUser.post('/login', userController.login);
 userRoutesUser.put('/changePassword', userController.changePassword);
 userRoutesUser.put('/changeProfile', userController.changeProfile);
+userRoutesUser.post('/forgotPasswordEmail', userController.forgotPasswordEmail);
 
 
 module.exports = {

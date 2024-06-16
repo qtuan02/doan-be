@@ -151,10 +151,12 @@ const User = sequelize.define("users", {
   email: {
     type: DataTypes.STRING(255),
     allowNull: false,
+    unique: true,
   },
   phone: {
     type: DataTypes.STRING(11),
     allowNull: false,
+    unique: true,
   },
   birth: DataTypes.STRING(11),
   gender: DataTypes.STRING(10),
@@ -165,6 +167,14 @@ const User = sequelize.define("users", {
   status: {
     type: DataTypes.BOOLEAN,
     allowNull: false
+  },
+  verifyKey: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  expired: {
+    type: DataTypes.DATE,
+    allowNull: true
   },
   role: DataTypes.STRING(20)
 }, {

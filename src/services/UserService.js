@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const { User } = require("../configs/models");
 const bcrypt = require('bcrypt');
+const { createVerify } = require("crypto");
 
 const userService = {
     findOne: async (user_id) => {
@@ -17,7 +18,7 @@ const userService = {
         try{
             const { phone, page, limit, status, role } = query;
             const whereCondition = {
-                email: { [Op.ne]: "tuan@gmail.com" }
+                email: { [Op.ne]: "huynhquoctuan200702@gmail.com" }
             };
 
             if (phone) { whereCondition.phone = {
@@ -147,7 +148,17 @@ const userService = {
         }catch(err){
             throw new Error();
         }
-    }
+    },
+    createVerifyUser: async (email, data) => {
+        try{
+            const createVerifyUser = await User.update(data, {
+                where: { email: email }
+            });
+            return createVerifyUser;
+        }catch(err){
+            throw new Error();
+        }
+    },
 }
 
 module.exports = userService;

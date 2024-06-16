@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const appConfig = {
     PORT: process.env.PORT,
+    GMAIL_USER: process.env.GMAIL_USER,
+    GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
     HOST: process.env.HOST,
     USER: process.env.USER,
     PASSWORD: process.env.PASSWORD,

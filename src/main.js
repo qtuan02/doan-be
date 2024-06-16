@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
-const pusher = require("./configs/pusher");
 const { Banner, Category, Brand, Product, Cart, User, Order, OrderDetail, Favorite } = require("./configs/models");
 const appConfig = require("./configs/env.config");
 const sequelize = require("./configs/connection");

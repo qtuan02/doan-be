@@ -4,6 +4,8 @@ const JsonResponse = require("../common/reponses/JsonResponse");
 const jwtFitler = require("../common/securities/jwt");
 const userService = require("../services/UserService");
 const pusher = require("../configs/pusher");
+const crypto = require("crypto");
+const { sendMail } = require("../configs/nodemailer");
 
 const userController = {
     findAll: async (req, res) => {
@@ -174,6 +176,28 @@ const userController = {
 
         pusher.trigger("user", "user-update", { updateUser });
         return res.status(200).send(JsonResponse(200, Message.UPDATE_USER_SUCCESS, true));
+    },
+    forgotPasswordEmail: async (req, res) => {
+        const { email } = req.body;
+
+        if(!email){
+            return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
+        }
+
+        const user = await userService.findByPhoneOrEmail(email);
+        if(!user){
+            return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_USER, null));
+        }
+
+        const verifyKey = crypto.randomBytes(64).toString('hex');
+        const expired = Date.now() + 1000;
+        const createVerifyUser = await userService.createVerifyUser(email, { verifyKey, expired });
+        const send = await sendMail(email, verifyKey);
+        if(!send || !createVerifyUser) {
+            return res.status(400).send(JsonResponse(400, Message.SEND_MAIL_FAIL, null));
+        }
+    
+        return res.status(200).send(JsonResponse(200, Message.SEND_MAIL_SUCCESS, true));
     }
 }
 
