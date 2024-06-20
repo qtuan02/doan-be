@@ -138,15 +138,15 @@ const User = sequelize.define("users", {
   },
   firstname: {
     type: DataTypes.STRING(30),
-    allowNull: false,
+    allowNull: true,
   },
   lastname: {
     type: DataTypes.STRING(10),
-    allowNull: false,
+    allowNull: true,
   },
   address: {
     type: DataTypes.STRING(500),
-    allowNull: false,
+    allowNull: true,
   },
   email: {
     type: DataTypes.STRING(255),
