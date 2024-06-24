@@ -10,8 +10,6 @@ const admin = require("./routes/indexAdmin");
 const user = require("./routes/indexUser");
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(limiter);
 
