@@ -87,7 +87,7 @@ const productService = {
                     formattedProducts.push(formattedProduct);
                 }
 
-                return {count: count, rows: formattedProducts.map(p => omit(p, ['brand_id', 'category_id', 'brand', 'category', 'description']))};
+                return {count: count, rows: formattedProducts.map(p => omit(p, ['brand_id', 'category_id', 'brand', 'category']))};
             }
 
             const options = {
