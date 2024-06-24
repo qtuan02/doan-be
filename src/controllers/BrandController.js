@@ -51,7 +51,7 @@ const brandController = {
             return res.status(400).send(JsonResponse(400, Message.UPDATE_BRAND_FAIL, null));
         }
 
-        pusher.trigger("brand", "brand-update", { newBrand });
+        pusher.trigger("brand", "brand-update", { brand_id });
         return res.status(200).send(JsonResponse(200, Message.UPDATE_BRAND_SUCCESS, null));
     }
 }
