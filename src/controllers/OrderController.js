@@ -94,6 +94,16 @@ const orderController = {
             console.log("Delete all cart fail!")
         }
 
+        try{
+            await pusher.trigger('order_channel','order_created', {
+                message: 'Đặt hàng thành công.',
+                user_id: order.user_id,
+                fullname: order.fullname,
+            });
+        } catch(err){
+            console.log(err);
+        }
+
         return res.status(200).send(JsonResponse(200, Message.ADD_ORDER_SUCCESS, null));
     },
     paymentOfAnonymous: async (req, res) => {
@@ -106,9 +116,7 @@ const orderController = {
         if(!order){
             return res.status(400).send(JsonResponse(400, Message.ADD_ORDER_FAIL, null));
         }
-        
-        await pusher.trigger("order", "payment_order_token", Message.ADD_ORDER_SUCCESS);
-        
+
         const order_detail = await orderService.createOrderDetailAnonymous(order.order_id, carts);
         if(!order_detail){
             await orderService.deleteAll(order.order_id);
