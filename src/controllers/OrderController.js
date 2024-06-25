@@ -106,7 +106,9 @@ const orderController = {
         if(!order){
             return res.status(400).send(JsonResponse(400, Message.ADD_ORDER_FAIL, null));
         }
-
+        
+        await pusher.trigger("order", "payment_order_token", Message.ADD_ORDER_SUCCESS);
+        
         const order_detail = await orderService.createOrderDetailAnonymous(order.order_id, carts);
         if(!order_detail){
             await orderService.deleteAll(order.order_id);
@@ -114,7 +116,6 @@ const orderController = {
             return res.status(400).send(JsonResponse(400, Message.ADD_ORDER_FAIL, null));
         }
 
-        pusher.trigger("order", "order-add-public", { order });
         return res.status(200).send(JsonResponse(200, Message.ADD_ORDER_SUCCESS, null));
     },
     updateStatusOrder: async (req, res) => {
