@@ -94,7 +94,6 @@ const orderController = {
             console.log("Delete all cart fail!")
         }
 
-        pusher.trigger("order", "order-add-user", { order });
         return res.status(200).send(JsonResponse(200, Message.ADD_ORDER_SUCCESS, null));
     },
     paymentOfAnonymous: async (req, res) => {
@@ -131,7 +130,6 @@ const orderController = {
             return res.status(400).send(JsonResponse(400, Message.UPDATE_ORDER_FAIL, null));
         }
 
-        pusher.trigger("order", "order-update", { isUpdated });
         return res.status(200).send(JsonResponse(200, Message.UPDATE_ORDER_SUCCSES, isUpdated));
     }
 }

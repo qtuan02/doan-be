@@ -2,7 +2,6 @@ const Message = require("../common/messages/ConstantMessage");
 const JsonResponse = require("../common/reponses/JsonResponse");
 const productService = require("../services/ProductService");
 const imageService = require("../services/ImageService");
-const pusher = require("../configs/pusher");
 
 const productController = {
     createProduct: async (req, res) => {
@@ -32,7 +31,6 @@ const productController = {
             return res.status(400).send(JsonResponse(400, Message.CREATE_IMAGE_FAIL, null));
         }
 
-        pusher.trigger("product", "product-add", { product });
         return res.status(200).send(JsonResponse(200, Message.CREATE_PRODUCT_SUCCESS, true));
     },
     findOne: async (req, res) => {
@@ -63,7 +61,6 @@ const productController = {
             return res.status(400).send(JsonResponse(400, Message.DELETE_PRODUCT_FAIL, null));
         }
         
-        pusher.trigger("product", "product-delete", { isDeleted });
         return res.status(200).send(JsonResponse(200, Message.DELETE_PRODUCT_SUCCESS, true));
     },
     updateProduct: async(req, res) => {
@@ -81,7 +78,6 @@ const productController = {
             return res.status(400).send(JsonResponse(400, Message.UPDATE_PRODUCT_FAIL, null));
         }
     
-        pusher.trigger("product", "product-update", { isUpdated });
         return res.status(200).send(JsonResponse(200, Message.UPDATE_PRODUCT_SUCCESS, true));
     },
     createImageDescription: async (req, res) => {

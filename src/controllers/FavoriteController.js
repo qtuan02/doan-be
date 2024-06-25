@@ -16,7 +16,6 @@ const favoriteControler = {
             return res.status(400).send(JsonResponse(400, Message.NOT_FOUND_USER, null));
         }
 
-        
         const { product_id } = req.body;
         if(!product_id){
             return res.status(400).send(JsonResponse(400, Message.FILED_EMPTY, null));
